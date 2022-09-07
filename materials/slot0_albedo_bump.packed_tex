@@ -1,0 +1,8 @@
+{
+	"contains_albedo": true,
+	"resolution": 512,
+	"src": {
+		"a": "#ff888888",
+		"rgb": "res://textures/TexturesCom_Grass0053_1_seamless_S.jpg"
+	}
+}
