@@ -32,17 +32,31 @@ export (Vector3) var floor_normal = Vector3(0, 1, 0) #Floor normal direction vec
 export (Vector3) var jump_vector = Vector3(0, 1, 0) #Jump normal direction vector
 export (Vector3) var velocity = Vector3(0, 0, 0) #Initial velocity
 
+export (int) var CAMERA_X_ROT_MIN = -30
+export (int) var CAMERA_X_ROT_MAX = 30
+export (float) var CAMERA_MOUSE_ROTATION_SPEED = 0.001
+var camera_x_rot = 0.0
+
 var animation_player
+var hit = false
+
+
+# onready var camera_base = $CameraBase
+# onready var camera_animation = camera_base.get_node(@"Animation")
+# onready var camera_rot = camera_base.get_node(@"CameraRot")
+onready var spring_arm = get_node(@"SpringArm")
+onready var camera = spring_arm.get_node(@"Camera")
 
 func _ready():
 	if mouse_captured:
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	animation_player = get_node("Model/AnimationPlayer")
-	print(animation_player.get_animation_list())
 	pass
 
 func _process(delta):
-	pass
+	if Input.is_action_pressed("ui_accept"):
+		hit = true
+	else : hit = false
 	
 func _physics_process(delta):
 	
@@ -52,22 +66,24 @@ func _physics_process(delta):
 		
 		#Left
 		if Input.is_action_pressed("move_left"):
-			dir.x -= 1
+			dir.x += 1
 			
 		#Right
 		if Input.is_action_pressed("move_right"):
-			dir.x += 1
+			dir.x -= 1
 			
 		#Forward
 		if Input.is_action_pressed("move_forward"):
-			dir.z -= 1;
+			dir.z += 1;
 			
 		#Backwards	
 		if Input.is_action_pressed("move_backwards"):
-			dir.z += 1
+			dir.z -= 1
 				
 		if dir.length() != 0:
 			animation_player.play("RUN")
+		else:
+			animation_player.play("IDLE")
 		
 		#Jump
 		if Input.is_action_pressed("move_jump") and is_on_floor():
@@ -101,6 +117,15 @@ func _physics_process(delta):
 func _input(event):
 	#Mouse movement
 	if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
-		self.rotation_degrees.y += -event.relative.x * mouse_sensitivity_x
-		$Camera.rotation_degrees.x = clamp($Camera.rotation_degrees.x + -event.relative.y * mouse_sensitivity_y, mouse_max_down, mouse_max_up)
-	pass
+			var camera_speed_this_frame = CAMERA_MOUSE_ROTATION_SPEED
+			rotate_camera(event.relative * camera_speed_this_frame)
+	
+	
+func rotate_camera(move):
+	# spring_arm.rotate_y(move.x)
+	self.rotate_y(-move.x)
+	# After relative transforms, camera needs to be renormalized.
+	spring_arm.orthonormalize()
+	camera_x_rot -= move.y
+	camera_x_rot = clamp(camera_x_rot, deg2rad(CAMERA_X_ROT_MIN), deg2rad(CAMERA_X_ROT_MAX))
+	spring_arm.rotation.x = camera_x_rot
