@@ -27,7 +27,7 @@ _global_script_class_icons={
 [application]
 
 config/name="game-design-2022"
-run/main_scene="res://scenes/levels/main.tscn"
+run/main_scene="res://objects/levels/main.tscn"
 config/icon="res://icon.png"
 
 [editor_plugins]
