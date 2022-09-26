@@ -1,0 +1,42 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://downloads/tree.fbx" type="PackedScene" id=1]
+[ext_resource path="res://materials/leaves.tres" type="Material" id=2]
+[ext_resource path="res://materials/trunk.tres" type="Material" id=3]
+[ext_resource path="res://scripts/tree.gd" type="Script" id=4]
+
+[sub_resource type="ParticlesMaterial" id=1]
+emission_shape = 1
+emission_sphere_radius = 10.53
+scale = 0.1
+scale_random = 0.3
+
+[sub_resource type="SpatialMaterial" id=2]
+params_billboard_mode = 3
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+emission_enabled = true
+emission = Color( 0.988235, 1, 0.564706, 1 )
+emission_energy = 8.19
+emission_operator = 0
+emission_on_uv2 = false
+
+[sub_resource type="QuadMesh" id=3]
+material = SubResource( 2 )
+
+[node name="tree" instance=ExtResource( 1 )]
+script = ExtResource( 4 )
+
+[node name="Cylinder" parent="RootNode" index="0"]
+material/0 = ExtResource( 3 )
+
+[node name="Icosphere" parent="RootNode" index="1"]
+transform = Transform( 496.762, 0, 0, 0, -0.000177656, 496.762, 0, -496.762, -0.000177656, 3.47541, 13.6757, -1.21126 )
+material/0 = ExtResource( 2 )
+
+[node name="Particles" type="Particles" parent="." index="1"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.02832, 11.2838, 0 )
+amount = 30
+process_material = SubResource( 1 )
+draw_pass_1 = SubResource( 3 )
