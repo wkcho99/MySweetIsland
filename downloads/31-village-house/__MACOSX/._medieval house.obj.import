@@ -1,0 +1,20 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/._medieval house.obj-f599a5b6964d64818ae49fc4d2cff35d.mesh"
+
+[deps]
+
+files=[ "res://.import/._medieval house.obj-f599a5b6964d64818ae49fc4d2cff35d.mesh" ]
+
+source_file="res://downloads/31-village-house/__MACOSX/._medieval house.obj"
+dest_files=[ "res://.import/._medieval house.obj-f599a5b6964d64818ae49fc4d2cff35d.mesh", "res://.import/._medieval house.obj-f599a5b6964d64818ae49fc4d2cff35d.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+octahedral_compression=true
+optimize_mesh_flags=4286
