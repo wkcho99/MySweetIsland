@@ -1,0 +1,20 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/Trava Kolosok.obj-3d7a9e068ed23e785c679f4127b6814a.mesh"
+
+[deps]
+
+files=[ "res://.import/Trava Kolosok.obj-3d7a9e068ed23e785c679f4127b6814a.mesh" ]
+
+source_file="res://downloads/91-trava-kolosok/Trava Kolosok.obj"
+dest_files=[ "res://.import/Trava Kolosok.obj-3d7a9e068ed23e785c679f4127b6814a.mesh", "res://.import/Trava Kolosok.obj-3d7a9e068ed23e785c679f4127b6814a.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+octahedral_compression=true
+optimize_mesh_flags=4286

@@ -1,0 +1,20 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/CasaMedievalC.obj-18ab5e120a4d18a3a9f8193bbab6e431.mesh"
+
+[deps]
+
+files=[ "res://.import/CasaMedievalC.obj-18ab5e120a4d18a3a9f8193bbab6e431.mesh" ]
+
+source_file="res://downloads/94-casa-medieval-1/Casa Medieval 1/CasaMedievalC.obj"
+dest_files=[ "res://.import/CasaMedievalC.obj-18ab5e120a4d18a3a9f8193bbab6e431.mesh", "res://.import/CasaMedievalC.obj-18ab5e120a4d18a3a9f8193bbab6e431.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+octahedral_compression=true
+optimize_mesh_flags=4286

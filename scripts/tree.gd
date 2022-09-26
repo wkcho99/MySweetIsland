@@ -5,15 +5,20 @@ extends Spatial
 # var a = 2
 # var b = "text"
 onready var _animator := $AnimationPlayer
+onready var _particles := $Particles
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	var world = $World
+
 func _process(delta):
 	_fall()
 
 func _fall():
-	if get_node("../Player/PlayerBody").hit : _animator.play("fall")
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+	if get_node("../Player/PlayerBody").hit : 
+		_animator.play("fall")
+		_particles.emitting = false
+
+
+func _sparkle():
+	pass
