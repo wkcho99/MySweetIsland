@@ -1,4 +1,4 @@
-extends RigidBody
+extends Spatial
 
 
 # Declare member variables here. Examples:
