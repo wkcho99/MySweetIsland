@@ -20,7 +20,6 @@ infinite_inertia = true
 
 [node name="CollisionShape" type="CollisionShape" parent="PlayerBody"]
 transform = Transform( 0.639, 0, 0, 0, -2.27299e-08, 0.421, 0, -0.52, -1.84025e-08, 0, 0.844904, 0 )
-visible = false
 shape = SubResource( 1 )
 
 [node name="MeshInstance" type="MeshInstance" parent="PlayerBody/CollisionShape"]

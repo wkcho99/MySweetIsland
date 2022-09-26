@@ -1,14 +1,14 @@
-extends Spatial
+extends RigidBody
 
 
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
 onready var _animator := $AnimationPlayer
-onready var _particles := $Particles
-
 var fall = false
 var can_cut = false
+onready var _particles := $Particles
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	var world = $World
@@ -30,7 +30,3 @@ func _fall():
 
 func _sparkle():
 	pass
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
