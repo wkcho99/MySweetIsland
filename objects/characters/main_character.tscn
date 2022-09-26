@@ -1,5 +1,6 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
+[ext_resource path="res://objects/Axe.tscn" type="PackedScene" id=1]
 [ext_resource path="res://downloads/link_wip_maj_13062022_GLTF/scene.gltf" type="PackedScene" id=2]
 
 [sub_resource type="Animation" id=2]
@@ -670,18 +671,122 @@ tracks/94/loop_wrap = true
 tracks/94/imported = false
 tracks/94/enabled = true
 tracks/94/keys = PoolRealArray( 0, 1, 0, 0, 0, -4.32617e-08, -1.11758e-08, 7.1886e-09, 1, 0.999996, 0.999996, 0.999996, 0.15, 1, 0, 0, 0, -4.45875e-08, 1.49011e-08, -5.46723e-09, 1, 0.999996, 0.999995, 0.999995 )
+tracks/95/type = "transform"
+tracks/95/path = NodePath("Sketchfab_model/5d4935310a2540cda4b80b9934d7311afbx/Object_2/RootNode/Object_4/Skeleton/Object_7")
+tracks/95/interp = 1
+tracks/95/loop_wrap = true
+tracks/95/imported = false
+tracks/95/enabled = true
+tracks/95/keys = PoolRealArray(  )
+tracks/96/type = "value"
+tracks/96/path = NodePath("Sketchfab_model/5d4935310a2540cda4b80b9934d7311afbx/Object_2/RootNode/Object_4/Skeleton/Object_7:visible")
+tracks/96/interp = 1
+tracks/96/loop_wrap = true
+tracks/96/imported = false
+tracks/96/enabled = true
+tracks/96/keys = {
+"times": PoolRealArray( 0.5 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/97/type = "transform"
+tracks/97/path = NodePath("Axe")
+tracks/97/interp = 1
+tracks/97/loop_wrap = true
+tracks/97/imported = false
+tracks/97/enabled = true
+tracks/97/keys = PoolRealArray(  )
+tracks/98/type = "value"
+tracks/98/path = NodePath("Axe:translation")
+tracks/98/interp = 1
+tracks/98/loop_wrap = true
+tracks/98/imported = false
+tracks/98/enabled = true
+tracks/98/keys = {
+"times": PoolRealArray( 0, 0.0393204, 0.0783406, 0.129367 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( -0.737524, 0.628179, 0.304859 ), Vector3( -0.183324, 0.628179, 0.935806 ), Vector3( 0.505399, 0.608193, 0.913195 ), Vector3( 0.615762, 0.681792, -0.14238 ) ]
+}
+tracks/99/type = "value"
+tracks/99/path = NodePath("Axe:rotation_degrees")
+tracks/99/interp = 1
+tracks/99/loop_wrap = true
+tracks/99/imported = false
+tracks/99/enabled = true
+tracks/99/keys = {
+"times": PoolRealArray( 0, 0.0393204, 0.0783406, 0.129367 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( -3.60564, -115.417, 92.8103 ), Vector3( -3.60564, -52.7086, 92.8103 ), Vector3( -3.60564, 13.5538, 92.8103 ), Vector3( -3.60564, 70.6678, 92.8103 ) ]
+}
+tracks/100/type = "value"
+tracks/100/path = NodePath("Axe:visible")
+tracks/100/interp = 1
+tracks/100/loop_wrap = true
+tracks/100/imported = false
+tracks/100/enabled = true
+tracks/100/keys = {
+"times": PoolRealArray( 0, 0.133869 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+
+[sub_resource type="Animation" id=3]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Axe:translation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( -0.737524, 0.628179, 0.304859 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Axe:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( -3.60564, -52.7086, 92.8103 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Axe:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ true ]
+}
 
 [node name="scene" instance=ExtResource( 2 )]
+
+[node name="Object_7" parent="Sketchfab_model/5d4935310a2540cda4b80b9934d7311afbx/Object_2/RootNode/Object_4/Skeleton" index="0"]
+visible = false
 
 [node name="Object_17" parent="Sketchfab_model/5d4935310a2540cda4b80b9934d7311afbx/Object_2/RootNode/Object_4/Skeleton" index="5"]
 visible = false
 
-[node name="Axe" type="MeshInstance" parent="Sketchfab_model/5d4935310a2540cda4b80b9934d7311afbx/Object_2/RootNode/Object_4" index="7"]
-transform = Transform( 100, 0, 0, 0, 100, 2.22045e-14, 0, -2.22045e-14, 100, 980.381, -3391.53, -2539.77 )
-skeleton = NodePath("../../../../../..")
-
-[node name="sword" parent="Sketchfab_model/5d4935310a2540cda4b80b9934d7311afbx/Object_2/RootNode/Object_4" index="8"]
+[node name="sword" parent="Sketchfab_model/5d4935310a2540cda4b80b9934d7311afbx/Object_2/RootNode/Object_4" index="7"]
 transform = Transform( 100, 0, 0, 0, -1.19209e-05, 100, 0, -100, -1.19209e-05, 0, 0, 0 )
 
-[node name="AnimationPlayer" parent="." index="1"]
+[node name="Axe" parent="." index="1" instance=ExtResource( 1 )]
+transform = Transform( 0.00608007, -0.121519, -0.119098, 0.299046, -0.00978632, 0.0094333, -0.0231186, -0.158548, 0.0907004, -0.737524, 0.628179, 0.304859 )
+
+[node name="AnimationPlayer" parent="." index="2"]
 anims/ATK_AXE = SubResource( 2 )
+anims/RESET = SubResource( 3 )
