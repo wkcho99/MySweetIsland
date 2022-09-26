@@ -14,7 +14,7 @@ func _ready():
 	var world = $World
 
 func _process(delta):
-	if get_node("./Area").overlaps_body(get_node("../Player/PlayerBody")) :
+	if get_node("./RootNode/Area").overlaps_body(get_node("../Player/PlayerBody")) :
 		can_cut = true
 	else: can_cut = false
 	#if get_node("./Area").overlaps_body(get_node("../Player/PlayerBody")) :
