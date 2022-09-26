@@ -36,11 +36,9 @@ export (int) var CAMERA_X_ROT_MIN = -30
 export (int) var CAMERA_X_ROT_MAX = 30
 export (float) var CAMERA_MOUSE_ROTATION_SPEED = 0.001
 var camera_x_rot = 0.0
-
 var animation_player
 var hit = false
-
-
+var hitt = false
 # onready var camera_base = $CameraBase
 # onready var camera_animation = camera_base.get_node(@"Animation")
 # onready var camera_rot = camera_base.get_node(@"CameraRot")
@@ -54,10 +52,14 @@ func _ready():
 	pass
 
 func _process(delta):
-	if Input.is_action_pressed("ui_accept"):
+	if Input.is_key_pressed(KEY_F) && hit == false:
+		#print(get_node(".").transform.origin.distance_to(get_node("/root/Spatial/tree/CollisionShape").transform.origin))
+		#if get_node(".").transform.origin.distance_to(get_node("/root/Spatial/tree/CollisionShape").transform.origin)<0.2 :
+		animation_player.play("ATK_AXE",-1,0.4,false)
 		hit = true
+		#else : hit = false
 	else : hit = false
-	
+
 func _physics_process(delta):
 	
 	#player movement XY
@@ -83,7 +85,8 @@ func _physics_process(delta):
 		if dir.length() != 0:
 			animation_player.play("RUN")
 		else:
-			animation_player.play("IDLE")
+			if !animation_player.is_playing() :
+				animation_player.play("IDLE")
 		
 		#Jump
 		if Input.is_action_pressed("move_jump") and is_on_floor():
