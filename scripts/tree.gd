@@ -26,6 +26,7 @@ func _fall():
 		_animator.play("fall")
 		fall = true
 		_particles.emitting = false
+	
 
 
 func _sparkle():
