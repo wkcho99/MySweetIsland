@@ -33,7 +33,7 @@ script = ExtResource( 4 )
 [node name="Area" type="Area" parent="RootNode" index="0"]
 
 [node name="CollisionShape" type="CollisionShape" parent="RootNode/Area" index="0"]
-transform = Transform( 2.24524, 0, 0, 0, 4.98762, 0, 0, 0, 1.983, 0.274077, 3.44214, -0.119556 )
+transform = Transform( 2.24524, 0, 0, 0, 4.98762, 0, 0, 0, 1.983, 0.274077, 3.55873, -0.119556 )
 shape = SubResource( 4 )
 
 [node name="Cylinder" parent="RootNode" index="1"]
