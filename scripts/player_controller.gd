@@ -41,7 +41,8 @@ var is_placing = false
 var camera_x_rot = 0.0
 var animation_player
 var hit = false
-var hitt = false
+onready var branch = 0
+onready var stone = 0
 # onready var camera_base = $CameraBase
 # onready var camera_animation = camera_base.get_node(@"Animation")
 # onready var camera_rot = camera_base.get_node(@"CameraRot")
@@ -53,6 +54,8 @@ func _ready():
 	if mouse_captured:
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	animation_player = get_node("Model/AnimationPlayer")
+	branch = 0
+	stone = 0
 	pass
 
 func _process(delta):
