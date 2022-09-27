@@ -17,6 +17,7 @@ mid_height = 2.0
 script = ExtResource( 3 )
 stop_on_slope = true
 infinite_inertia = true
+FORWARD_OFFSET = 5
 
 [node name="CollisionShape" type="CollisionShape" parent="PlayerBody"]
 transform = Transform( 0.639, 0, 0, 0, -2.27299e-08, 0.421, 0, -0.52, -1.84025e-08, 0, 0.844904, 0 )

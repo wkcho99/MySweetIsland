@@ -36,6 +36,7 @@ export (int) var CAMERA_X_ROT_MIN = -30
 export (int) var CAMERA_X_ROT_MAX = 30
 export (float) var CAMERA_MOUSE_ROTATION_SPEED = 0.001
 export (int) var FORWARD_OFFSET = 10
+export (int) var STRAFE_OFFSET = 3
 var placing_instance
 var is_placing = false
 var camera_x_rot = 0.0
@@ -56,7 +57,6 @@ func _ready():
 	animation_player = get_node("Model/AnimationPlayer")
 	branch = 0
 	stone = 0
-	pass
 
 func _process(delta):
 	if Input.is_key_pressed(KEY_F) && hit == false:
@@ -74,8 +74,9 @@ func _process(delta):
 		is_placing = false
 		exit_building()
 
-	if Input.is_action_just_pressed("place_building") and is_placing:
+	if Input.is_action_just_pressed("place_building") and is_placing and self.branch > 0:
 		place_building()
+		self.branch -= 1
 
 
 func _physics_process(delta):
@@ -155,7 +156,7 @@ func enter_building():
 	print("enter")
 	var house = load("res://objects/buildings/cobble_house.tscn")
 	placing_instance = house.instance()
-	var building_offset = Vector3(-2, 0, -FORWARD_OFFSET)
+	var building_offset = Vector3(-STRAFE_OFFSET, 0, -FORWARD_OFFSET)
 	add_child(placing_instance)
 	placing_instance.translate_object_local(building_offset)
 	# print("Player:", self.transform.origin)
@@ -170,7 +171,7 @@ func place_building():
 	print("place")
 	var building = load("res://objects/buildings/cobble_house.tscn")
 	var building_instance = building.instance()
-	var building_offset = Vector3(-2, 0, -FORWARD_OFFSET)
+	var building_offset = Vector3(-STRAFE_OFFSET, 0, -FORWARD_OFFSET)
 	if world == null: return
 	world.add_child(building_instance)
 	building_instance.set_transform(self.get_global_transform())
