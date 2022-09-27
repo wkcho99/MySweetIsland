@@ -23,9 +23,10 @@ func _process(delta):
 		set_axis_lock(4, false)
 		#add_force(Vector3(-10,-10,-10),Vector3(-10,-10,-10))
 		
-	if get_node("./Area").overlaps_body(get_node("../Player/PlayerBody")) :
+	if get_node("./Area").overlaps_body(get_node("../Player/PlayerBody")) && visible == true :
 		get_node("../tree").fall = false
 		visible = false
+		get_node("../Player/PlayerBody").branch += 1
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
