@@ -11,7 +11,7 @@ onready var _particles := $Particles
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	var world = $World
+	pass
 
 func _process(delta):
 	if get_node("./RootNode/Area").overlaps_body(get_node("../Player/PlayerBody")) :

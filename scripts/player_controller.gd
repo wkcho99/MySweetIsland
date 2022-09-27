@@ -35,6 +35,9 @@ export (Vector3) var velocity = Vector3(0, 0, 0) #Initial velocity
 export (int) var CAMERA_X_ROT_MIN = -30
 export (int) var CAMERA_X_ROT_MAX = 30
 export (float) var CAMERA_MOUSE_ROTATION_SPEED = 0.001
+export (int) var FORWARD_OFFSET = 10
+var placing_instance
+var is_placing = false
 var camera_x_rot = 0.0
 var animation_player
 var hit = false
@@ -44,6 +47,7 @@ var hitt = false
 # onready var camera_rot = camera_base.get_node(@"CameraRot")
 onready var spring_arm = get_node(@"SpringArm")
 onready var camera = spring_arm.get_node(@"Camera")
+onready var world = get_node("/root/World")
 
 func _ready():
 	if mouse_captured:
@@ -59,6 +63,17 @@ func _process(delta):
 		hit = true
 		#else : hit = false
 	else : hit = false
+
+	if Input.is_action_just_pressed("toggle_build") and not is_placing:
+		is_placing = true
+		enter_building()
+	elif Input.is_action_just_pressed("toggle_build") and is_placing:
+		is_placing = false
+		exit_building()
+
+	if Input.is_action_just_pressed("place_building") and is_placing:
+		place_building()
+
 
 func _physics_process(delta):
 	
@@ -132,3 +147,28 @@ func rotate_camera(move):
 	camera_x_rot -= move.y
 	camera_x_rot = clamp(camera_x_rot, deg2rad(CAMERA_X_ROT_MIN), deg2rad(CAMERA_X_ROT_MAX))
 	spring_arm.rotation.x = camera_x_rot
+
+func enter_building():
+	print("enter")
+	var house = load("res://objects/buildings/cobble_house.tscn")
+	placing_instance = house.instance()
+	var building_offset = Vector3(-2, 0, -FORWARD_OFFSET)
+	add_child(placing_instance)
+	placing_instance.translate_object_local(building_offset)
+	# print("Player:", self.transform.origin)
+	# print("House:", instance.transform.origin)
+	# print("finished building")
+	
+func exit_building():
+	print("exit")
+	placing_instance.queue_free()
+
+func place_building():
+	print("place")
+	var building = load("res://objects/buildings/cobble_house.tscn")
+	var building_instance = building.instance()
+	var building_offset = Vector3(-2, 0, -FORWARD_OFFSET)
+	if world == null: return
+	world.add_child(building_instance)
+	building_instance.set_transform(self.get_global_transform())
+	building_instance.translate(building_offset)
