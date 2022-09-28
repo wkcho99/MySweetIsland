@@ -37,7 +37,11 @@ export (int) var CAMERA_X_ROT_MAX = 30
 export (float) var CAMERA_MOUSE_ROTATION_SPEED = 0.001
 export (int) var FORWARD_OFFSET = 10
 export (int) var STRAFE_OFFSET = 3
+export (int) var HEIGHT_DELTA_SPEED = 10
+var BUILDINGS = ["wall", "floor", "roof"]
+var building_index = 0
 var placing_instance
+var building_type = load("res://objects/buildings/" + BUILDINGS[building_index] + ".tscn")
 var is_placing = false
 var camera_x_rot = 0.0
 var animation_player
@@ -74,9 +78,15 @@ func _process(delta):
 		is_placing = false
 		exit_building()
 
-	if Input.is_action_just_pressed("place_building") and is_placing and self.branch > 0:
+	if Input.is_action_just_pressed("cycle_building") and is_placing:
+		cycle_building_type()
+
+	if Input.is_action_just_pressed("place_building") and is_placing: # and self.branch > 0:
 		place_building()
 		self.branch -= 1
+	
+	if is_placing:
+		change_building_height()
 
 
 func _physics_process(delta):
@@ -154,25 +164,34 @@ func rotate_camera(move):
 
 func enter_building():
 	print("enter")
-	var house = load("res://objects/buildings/cobble_house.tscn")
-	placing_instance = house.instance()
-	var building_offset = Vector3(-STRAFE_OFFSET, 0, -FORWARD_OFFSET)
+	placing_instance = building_type.instance()
+	var building_offset = Vector3(0, 0, FORWARD_OFFSET)
 	add_child(placing_instance)
 	placing_instance.translate_object_local(building_offset)
-	# print("Player:", self.transform.origin)
-	# print("House:", instance.transform.origin)
-	# print("finished building")
 	
+func change_building_height():
+	var height = camera_x_rot * HEIGHT_DELTA_SPEED
+	var new_building_pos = Vector3(placing_instance.translation.x, height, placing_instance.translation.z)
+	placing_instance.set_translation(new_building_pos)
+
+func cycle_building_type():
+	exit_building()
+	print("cycle")
+	if building_index+1 == len(BUILDINGS):
+		building_index = 0
+	else:
+		building_index += 1
+	var building_uri = "res://objects/buildings/" + BUILDINGS[building_index] + ".tscn"
+	building_type = load(building_uri)
+	enter_building()
+
 func exit_building():
 	print("exit")
 	placing_instance.queue_free()
 
 func place_building():
 	print("place")
-	var building = load("res://objects/buildings/cobble_house.tscn")
-	var building_instance = building.instance()
-	var building_offset = Vector3(-STRAFE_OFFSET, 0, -FORWARD_OFFSET)
-	if world == null: return
+	var building_instance = building_type.instance()
 	world.add_child(building_instance)
 	building_instance.set_transform(self.get_global_transform())
-	building_instance.translate(building_offset)
+	building_instance.translate(placing_instance.translation)

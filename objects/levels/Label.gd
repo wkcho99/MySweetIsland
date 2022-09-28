@@ -12,7 +12,7 @@ func _ready():
 	pass # Replace with function body.
 
 func _process(delta):
-	text = str(get_node("../../Player/PlayerBody").branch)
+	text = str(get_node("../../Player").branch)
 	# get_node("../TextureButton").visible = true
 
 	# if get_node("../../Player/PlayerBody").branch > 0 :

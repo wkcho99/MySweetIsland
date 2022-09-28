@@ -1,0 +1,20 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/Low-Poly_Models.obj-10657e156a711c3f6c63b5fce9912512.mesh"
+
+[deps]
+
+files=[ "res://.import/Low-Poly_Models.obj-10657e156a711c3f6c63b5fce9912512.mesh" ]
+
+source_file="res://downloads/jllccg0cf20w-LowPolyModels/LowPolyModels/Low-Poly_Models.obj"
+dest_files=[ "res://.import/Low-Poly_Models.obj-10657e156a711c3f6c63b5fce9912512.mesh", "res://.import/Low-Poly_Models.obj-10657e156a711c3f6c63b5fce9912512.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+octahedral_compression=true
+optimize_mesh_flags=4286

@@ -14,7 +14,7 @@ func _ready():
 	pass
 
 func _process(delta):
-	if get_node("./RootNode/Area").overlaps_body(get_node("../Player/PlayerBody")) :
+	if get_node("./RootNode/Area").overlaps_body(get_node("../Player")) :
 		can_cut = true
 	else: can_cut = false
 	#if get_node("./Area").overlaps_body(get_node("../Player/PlayerBody")) :
@@ -22,7 +22,7 @@ func _process(delta):
 	_fall()
 
 func _fall():
-	if get_node("../Player/PlayerBody").hit && fall == false && can_cut: 
+	if get_node("../Player").hit && fall == false && can_cut: 
 		_animator.play("fall")
 		fall = true
 		_particles.emitting = false

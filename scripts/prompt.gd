@@ -11,7 +11,7 @@ func _ready():
 	pass # Replace with function body.
 
 func _process(delta):
-	if get_node("../../Player/PlayerBody").hit:
+	if get_node("../../Player").hit:
 		self.visible = false
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
