@@ -1,11 +1,167 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://downloads/tree.fbx" type="PackedScene" id=1]
 [ext_resource path="res://materials/leaves.tres" type="Material" id=2]
 [ext_resource path="res://materials/trunk.tres" type="Material" id=3]
 [ext_resource path="res://scripts/tree.gd" type="Script" id=4]
+[ext_resource path="res://objects/nature/branch.tscn" type="PackedScene" id=5]
+[ext_resource path="res://scripts/trunk.gd" type="Script" id=6]
+[ext_resource path="res://scenes/objects/trunk.tscn" type="PackedScene" id=7]
 
 [sub_resource type="CylinderShape" id=4]
+
+[sub_resource type="Animation" id=8]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("RootNode:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ true ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("trunk:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+
+[sub_resource type="Animation" id=5]
+resource_name = "fall"
+length = 1.831
+tracks/0/type = "transform"
+tracks/0/path = NodePath("RootNode")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = PoolRealArray(  )
+tracks/1/type = "value"
+tracks/1/path = NodePath("RootNode:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ), Vector3( 0, 0, -88.661 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("RootNode:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 1.8 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("trunk:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 1.8 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+
+[sub_resource type="Animation" id=7]
+resource_name = "regen"
+tracks/0/type = "transform"
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = PoolRealArray(  )
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, true ]
+}
+tracks/2/type = "transform"
+tracks/2/path = NodePath("RootNode")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = PoolRealArray(  )
+tracks/3/type = "value"
+tracks/3/path = NodePath("RootNode:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, true ]
+}
+tracks/4/type = "transform"
+tracks/4/path = NodePath("trunk")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = PoolRealArray(  )
+tracks/5/type = "value"
+tracks/5/path = NodePath("trunk:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, false ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("RootNode:rotation_degrees")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ) ]
+}
+tracks/7/type = "transform"
+tracks/7/path = NodePath("branch")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = PoolRealArray(  )
 
 [sub_resource type="ParticlesMaterial" id=1]
 emission_shape = 1
@@ -13,7 +169,7 @@ emission_sphere_radius = 10.53
 scale = 0.1
 scale_random = 0.3
 
-[sub_resource type="SpatialMaterial" id=2]
+[sub_resource type="SpatialMaterial" id=6]
 params_billboard_mode = 3
 particles_anim_h_frames = 1
 particles_anim_v_frames = 1
@@ -25,12 +181,14 @@ emission_operator = 0
 emission_on_uv2 = false
 
 [sub_resource type="QuadMesh" id=3]
-material = SubResource( 2 )
+material = SubResource( 6 )
 
 [node name="tree" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 script = ExtResource( 4 )
 
 [node name="Area" type="Area" parent="RootNode" index="0"]
+transform = Transform( 1.25249, 0, 0, 0, 1, 0, 0, 0, 1.18746, -0.410809, 0, 0 )
 
 [node name="CollisionShape" type="CollisionShape" parent="RootNode/Area" index="0"]
 transform = Transform( 2.24524, 0, 0, 0, 4.98762, 0, 0, 0, 1.983, 0.274077, 3.55873, -0.119556 )
@@ -39,7 +197,13 @@ shape = SubResource( 4 )
 [node name="Cylinder" parent="RootNode" index="1"]
 material/0 = ExtResource( 3 )
 
-[node name="Icosphere" parent="RootNode" index="2"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="RootNode" index="2"]
+root_node = NodePath("../..")
+anims/RESET = SubResource( 8 )
+anims/fall = SubResource( 5 )
+anims/regen = SubResource( 7 )
+
+[node name="Icosphere" parent="RootNode" index="3"]
 transform = Transform( 496.762, 0, 0, 0, -0.000177656, 496.762, 0, -496.762, -0.000177656, 3.47541, 13.6757, -1.21126 )
 material/0 = ExtResource( 2 )
 
@@ -48,3 +212,17 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.02832, 11.2838, 0 )
 amount = 30
 process_material = SubResource( 1 )
 draw_pass_1 = SubResource( 3 )
+
+[node name="trunk" parent="." index="2" instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.374683, -0.894378, 0.594946 )
+visible = false
+script = ExtResource( 6 )
+
+[node name="branch" parent="." index="3" instance=ExtResource( 5 )]
+transform = Transform( 0.1, 0, 0, 0, 0.0999999, 0, 0, 0, 0.1, -3.81626, 10.0709, 7.25722 )
+
+[node name="StaticBody" type="StaticBody" parent="." index="4"]
+
+[node name="CollisionShape" type="CollisionShape" parent="StaticBody" index="0"]
+transform = Transform( 1.36061, 0, 0, 0, 4.98762, 0, 0, 0, 1.48029, 0.274077, 3.55873, -0.119556 )
+shape = SubResource( 4 )

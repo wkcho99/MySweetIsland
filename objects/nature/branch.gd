@@ -6,7 +6,7 @@ extends RigidBody
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	visible = false
-	print("ready")
+	print(get_node("../"))
 	set_axis_lock(1, true)
 	set_axis_lock(2, true)
 	set_axis_lock(4, true)
@@ -16,17 +16,17 @@ func _ready():
 	pass # Replace with function body.
 
 func _process(delta):
-	if get_node("../tree").fall == true :
+	if get_node("../").fall == true :
 		visible = true
 		set_axis_lock(1, false)
 		set_axis_lock(2, false)
 		set_axis_lock(4, false)
 		#add_force(Vector3(-10,-10,-10),Vector3(-10,-10,-10))
 		
-	if get_node("./Area").overlaps_body(get_node("../Player/PlayerBody")) && visible == true :
-		get_node("../tree").fall = false
+	if get_node("./Area").overlaps_body(get_node("../../Player/PlayerBody")) && get_node("../").fall == true :
+		get_node("../").fall = false
 		visible = false
-		get_node("../Player/PlayerBody").branch += 1
+		get_node("../../Player/PlayerBody").branch += 1
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
