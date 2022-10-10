@@ -9,6 +9,41 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Control",
+"class": "CtrlInventory",
+"language": "GDScript",
+"path": "res://addons/gloot/ctrl_inventory.gd"
+}, {
+"base": "Control",
+"class": "CtrlInventoryGrid",
+"language": "GDScript",
+"path": "res://addons/gloot/ctrl_inventory_grid.gd"
+}, {
+"base": "CtrlInventoryGrid",
+"class": "CtrlInventoryGridEx",
+"language": "GDScript",
+"path": "res://addons/gloot/ctrl_inventory_grid_ex.gd"
+}, {
+"base": "Control",
+"class": "CtrlInventoryItemRect",
+"language": "GDScript",
+"path": "res://addons/gloot/ctrl_inventory_item_rect.gd"
+}, {
+"base": "CtrlInventory",
+"class": "CtrlInventoryStacked",
+"language": "GDScript",
+"path": "res://addons/gloot/ctrl_inventory_stacked.gd"
+}, {
+"base": "Control",
+"class": "CtrlItemSlot",
+"language": "GDScript",
+"path": "res://addons/gloot/ctrl_item_slot.gd"
+}, {
+"base": "CtrlItemSlot",
+"class": "CtrlItemSlotEx",
+"language": "GDScript",
+"path": "res://addons/gloot/ctrl_item_slot_ex.gd"
+}, {
 "base": "ResourceFormatLoader",
 "class": "HTerrainDataLoader",
 "language": "GDScript",
@@ -18,11 +53,78 @@ _global_script_classes=[ {
 "class": "HTerrainDataSaver",
 "language": "GDScript",
 "path": "res://addons/zylann.hterrain/hterrain_resource_saver.gd"
+}, {
+"base": "Node",
+"class": "Inventory",
+"language": "GDScript",
+"path": "res://addons/gloot/inventory.gd"
+}, {
+"base": "Inventory",
+"class": "InventoryGrid",
+"language": "GDScript",
+"path": "res://addons/gloot/inventory_grid.gd"
+}, {
+"base": "Node",
+"class": "InventoryItem",
+"language": "GDScript",
+"path": "res://addons/gloot/inventory_item.gd"
+}, {
+"base": "Reference",
+"class": "InventoryManagerInventory",
+"language": "GDScript",
+"path": "res://inventory/InventoryManagerInventory.gd"
+}, {
+"base": "Reference",
+"class": "InventoryManagerItem",
+"language": "GDScript",
+"path": "res://inventory/InventoryManagerItem.gd"
+}, {
+"base": "Inventory",
+"class": "InventoryStacked",
+"language": "GDScript",
+"path": "res://addons/gloot/inventory_stacked.gd"
+}, {
+"base": "Resource",
+"class": "ItemProtoset",
+"language": "GDScript",
+"path": "res://addons/gloot/item_protoset.gd"
+}, {
+"base": "Node",
+"class": "ItemSlot",
+"language": "GDScript",
+"path": "res://addons/gloot/item_slot.gd"
+}, {
+"base": "Node",
+"class": "TestSuite",
+"language": "GDScript",
+"path": "res://tests/test_suite.gd"
 } ]
 _global_script_class_icons={
+"CtrlInventory": "",
+"CtrlInventoryGrid": "",
+"CtrlInventoryGridEx": "",
+"CtrlInventoryItemRect": "",
+"CtrlInventoryStacked": "",
+"CtrlItemSlot": "",
+"CtrlItemSlotEx": "",
 "HTerrainDataLoader": "",
-"HTerrainDataSaver": ""
+"HTerrainDataSaver": "",
+"Inventory": "",
+"InventoryGrid": "",
+"InventoryItem": "",
+"InventoryManagerInventory": "",
+"InventoryManagerItem": "",
+"InventoryStacked": "",
+"ItemProtoset": "",
+"ItemSlot": "",
+"TestSuite": ""
 }
+
+[PluginSettings]
+
+gdinv/RecursiveLoad=true
+gdinv/LoadOnReady=true
+gdinv/ItemJsonPaths=PoolStringArray( "res://assets/data/items/" )
 
 [application]
 
@@ -30,9 +132,14 @@ config/name="game-design-2022"
 run/main_scene="res://objects/levels/main.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+GDInv_ItemDB="*res://addons/gdinv/GDInv_ItemDB.gd"
+GLoot="*res://addons/gloot/gloot_autoload.gd"
+
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/waterways/plugin.cfg", "res://addons/zylann.hterrain/plugin.cfg" )
+enabled=PoolStringArray( "res://addons/gloot/plugin.cfg", "res://addons/waterways/plugin.cfg", "res://addons/zylann.hterrain/plugin.cfg" )
 
 [gui]
 
@@ -82,6 +189,11 @@ toggle_build={
 place_building={
 "deadzone": 0.5,
 "events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":2,"pressed":false,"doubleclick":false,"script":null)
+ ]
+}
+open_inventory={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":73,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
  ]
 }
 

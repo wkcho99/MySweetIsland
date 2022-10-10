@@ -33,9 +33,8 @@ func _fall():
 func _regen():
 	time_now = OS.get_ticks_msec()
 	time_elapsed = time_now - time_start
-	if time_elapsed > 5000 :
+	if time_elapsed > 5000 && time_start != 0 :
 		_animator.play("regen")
-		print("regened")
 		can_cut = true
 	
 

@@ -2,7 +2,8 @@ extends RigidBody
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
-
+onready var inventory: InventoryStacked
+var br : InventoryItem
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	visible = false
@@ -13,6 +14,9 @@ func _ready():
 	set_axis_lock(8, true)
 	set_axis_lock(16, true)
 	set_axis_lock(32, true)
+	inventory = get_node("../../InventoryStacked")
+	br = inventory.get_item_by_id("branch")
+	inventory.remove_all_items()
 	pass # Replace with function body.
 
 func _process(delta):
@@ -27,6 +31,8 @@ func _process(delta):
 		get_node("../").fall = false
 		visible = false
 		get_node("../../Player/PlayerBody").branch += 1
+		inventory.add_item(br)
+		print(inventory.get_item_count())
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):

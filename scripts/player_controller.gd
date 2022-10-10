@@ -142,7 +142,6 @@ func _input(event):
 			var camera_speed_this_frame = CAMERA_MOUSE_ROTATION_SPEED
 			rotate_camera(event.relative * camera_speed_this_frame)
 	
-	
 func rotate_camera(move):
 	# spring_arm.rotate_y(move.x)
 	self.rotate_y(-move.x)
