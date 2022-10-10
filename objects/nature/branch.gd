@@ -31,7 +31,11 @@ func _process(delta):
 		get_node("../").fall = false
 		visible = false
 		get_node("../../Player/PlayerBody").branch += 1
-		inventory.add_item(br)
+		if br != null :
+			inventory.add_item(br)
+		else :
+			inventory.create_and_add_item("branch")
+			br = inventory.get_item_by_id("branch")
 		print(inventory.get_item_count())
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

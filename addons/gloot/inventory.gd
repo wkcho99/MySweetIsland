@@ -125,11 +125,14 @@ func add_item(item: InventoryItem) -> bool:
 		return false
 	if has_item(item):
 		item.set_property("stack_size",item.get_property("stack_size")+1)
+		print("had")
+		return true
 
 	if item.get_parent():
 		item.get_parent().remove_child(item)
 
 	add_child(item)
+	print("added")
 	if Engine.editor_hint:
 		item.owner = get_tree().edited_scene_root
 	return true
@@ -148,10 +151,12 @@ func create_and_add_item(prototype_id: String) -> InventoryItem:
 func remove_item(item: InventoryItem) -> bool:
 	if item == null || !has_item(item):
 		return false
-		
-	if item.get_property("stack_size") < 2 :
-		remove_child(item)
-	item.set_property("stack_size",item.get_property("stack_size")-1)
+	#item.set_property("stack_size",item.get_property("stack_size")-1)	
+	if item.get_property("stack_size") >= 2 :
+		item.set_property("stack_size",item.get_property("stack_size")-1)
+		return true
+	remove_child(item)
+	print("removed")
 	return true
 
 

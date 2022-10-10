@@ -44,6 +44,8 @@ var animation_player
 var hit = false
 onready var branch = 0
 onready var stone = 0
+onready var inventory: InventoryStacked
+var br : InventoryItem
 # onready var camera_base = $CameraBase
 # onready var camera_animation = camera_base.get_node(@"Animation")
 # onready var camera_rot = camera_base.get_node(@"CameraRot")
@@ -57,6 +59,8 @@ func _ready():
 	animation_player = get_node("Model/AnimationPlayer")
 	branch = 0
 	stone = 0
+	inventory = get_node("../../InventoryStacked")
+	br = inventory.get_item_by_id("branch")
 
 func _process(delta):
 	if Input.is_key_pressed(KEY_F) && hit == false:
@@ -77,6 +81,7 @@ func _process(delta):
 	if Input.is_action_just_pressed("place_building") and is_placing and self.branch > 0:
 		place_building()
 		self.branch -= 1
+		inventory.remove_item(br)
 
 
 func _physics_process(delta):
