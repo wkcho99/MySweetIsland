@@ -4,6 +4,9 @@
 
 [node name="casa" instance=ExtResource( 1 )]
 
+[node name="Base" parent="RootNode" index="0"]
+visible = false
+
 [node name="Sea" parent="RootNode" index="5"]
 visible = false
 

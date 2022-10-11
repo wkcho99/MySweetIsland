@@ -6,7 +6,7 @@
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 4.64, 0.09, 2.34 )
 
-[node name="Root" type="Spatial"]
+[node name="Roof" type="Spatial"]
 
 [node name="StaticBody" type="StaticBody" parent="."]
 

@@ -45,6 +45,8 @@ var building_type = load("res://objects/buildings/" + BUILDINGS[building_index] 
 var is_placing = false
 var camera_x_rot = 0.0
 var animation_player
+var time = 0 # time in seconds
+var time_when_actionable = 0 # time in seconds
 var hit = false
 onready var branch = 0
 onready var stone = 0
@@ -63,27 +65,34 @@ func _ready():
 	stone = 0
 
 func _process(delta):
+	time += delta
+
 	if Input.is_key_pressed(KEY_F) && hit == false:
 		#print(get_node(".").transform.origin.distance_to(get_node("/root/Spatial/tree/CollisionShape").transform.origin))
 		#if get_node(".").transform.origin.distance_to(get_node("/root/Spatial/tree/CollisionShape").transform.origin)<0.2 :
 		animation_player.play("ATK_AXE",-1,0.4,false)
 		hit = true
+		time_when_actionable = time + animation_player.get_current_animation_length()
 		#else : hit = false
 	else : hit = false
 
 	if Input.is_action_just_pressed("toggle_build") and not is_placing:
 		is_placing = true
-		enter_building()
+		enter_building_mode()
 	elif Input.is_action_just_pressed("toggle_build") and is_placing:
 		is_placing = false
-		exit_building()
+		exit_building_mode()
 
 	if Input.is_action_just_pressed("cycle_building") and is_placing:
 		cycle_building_type()
 
 	if Input.is_action_just_pressed("place_building") and is_placing: # and self.branch > 0:
-		place_building()
-		self.branch -= 1
+		var position = get_valid_building_position()
+		if position != null:
+			place_building(position)
+			self.branch -= 1
+		else:
+			print("No valid position")
 	
 	if is_placing:
 		change_building_height()
@@ -93,7 +102,7 @@ func _physics_process(delta):
 	
 	#player movement XY
 	var dir = Vector3(0, 0, 0)
-	if can_move and (is_on_floor() or allow_fall_input):
+	if can_move and (is_on_floor() or allow_fall_input) and is_actionable():
 		
 		#Left
 		if Input.is_action_pressed("move_left"):
@@ -162,7 +171,7 @@ func rotate_camera(move):
 	camera_x_rot = clamp(camera_x_rot, deg2rad(CAMERA_X_ROT_MIN), deg2rad(CAMERA_X_ROT_MAX))
 	spring_arm.rotation.x = camera_x_rot
 
-func enter_building():
+func enter_building_mode():
 	print("enter")
 	placing_instance = building_type.instance()
 	var building_offset = Vector3(0, 0, FORWARD_OFFSET)
@@ -175,7 +184,7 @@ func change_building_height():
 	placing_instance.set_translation(new_building_pos)
 
 func cycle_building_type():
-	exit_building()
+	exit_building_mode()
 	print("cycle")
 	if building_index+1 == len(BUILDINGS):
 		building_index = 0
@@ -183,15 +192,45 @@ func cycle_building_type():
 		building_index += 1
 	var building_uri = "res://objects/buildings/" + BUILDINGS[building_index] + ".tscn"
 	building_type = load(building_uri)
-	enter_building()
+	enter_building_mode()
 
-func exit_building():
+func exit_building_mode():
 	print("exit")
 	placing_instance.queue_free()
 
-func place_building():
+func place_building(position):
 	print("place")
 	var building_instance = building_type.instance()
 	world.add_child(building_instance)
-	building_instance.set_transform(self.get_global_transform())
-	building_instance.translate(placing_instance.translation)
+	# building_instance.set_transform(self.get_global_transform())
+	building_instance.translate(position[0])
+	building_instance.set_rotation(position[1])
+	building_instance.add_to_group(building_instance.get_name())
+
+func get_valid_building_position():
+	match placing_instance.get_name():
+		"Floor":
+			print("place floor")
+			return [placing_instance.get_global_translation(), placing_instance.get_global_rotation()]
+		"Wall":
+			var bottom_edge = placing_instance.get_node("Bottom")
+			var first_wall_corner = bottom_edge.get_node("Corner1")
+			var second_wall_corner = bottom_edge.get_node("Corner2")
+			
+			var floors = get_tree().get_nodes_in_group("Floor")
+			for floor_ in floors:
+				for socket_num in range(1, 3):
+					var socket = floor_.get_node("LongEdge" + str(socket_num))
+					var first_socket_corner = socket.get_node("Corner1")
+					var second_socket_corner = socket.get_node("Corner2")
+					if first_wall_corner.overlaps_area(first_socket_corner) and second_wall_corner.overlaps_area(second_socket_corner) or \
+							second_wall_corner.overlaps_area(first_socket_corner) and first_wall_corner.overlaps_area(second_socket_corner):
+						return [socket.get_global_translation(), socket.get_global_rotation()]
+		"Roof":
+			return [placing_instance.get_translation(), self.get_rotation()]
+	return null
+
+func is_actionable():
+	if time > time_when_actionable:
+		return true
+	return false
