@@ -50,6 +50,8 @@ var time_when_actionable = 0 # time in seconds
 var hit = false
 onready var branch = 0
 onready var stone = 0
+onready var inventory: InventoryStacked
+var br : InventoryItem
 # onready var camera_base = $CameraBase
 # onready var camera_animation = camera_base.get_node(@"Animation")
 # onready var camera_rot = camera_base.get_node(@"CameraRot")
@@ -63,6 +65,8 @@ func _ready():
 	animation_player = get_node("Model/AnimationPlayer")
 	branch = 0
 	stone = 0
+	inventory = get_node("../InventoryStacked")
+	br = inventory.get_item_by_id("branch")
 
 func _process(delta):
 	time += delta
@@ -91,12 +95,12 @@ func _process(delta):
 		if position != null:
 			place_building(position)
 			self.branch -= 1
+			inventory.remove_item(br)
 		else:
 			print("No valid position")
 	
 	if is_placing:
 		change_building_height()
-
 
 func _physics_process(delta):
 	
@@ -160,7 +164,6 @@ func _input(event):
 	if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
 			var camera_speed_this_frame = CAMERA_MOUSE_ROTATION_SPEED
 			rotate_camera(event.relative * camera_speed_this_frame)
-	
 	
 func rotate_camera(move):
 	# spring_arm.rotate_y(move.x)

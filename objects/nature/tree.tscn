@@ -6,7 +6,7 @@
 [ext_resource path="res://scripts/tree.gd" type="Script" id=4]
 [ext_resource path="res://objects/nature/branch.tscn" type="PackedScene" id=5]
 [ext_resource path="res://scripts/trunk.gd" type="Script" id=6]
-[ext_resource path="res://scenes/objects/trunk.tscn" type="PackedScene" id=7]
+[ext_resource path="res://objects/nature/trunk.tscn" type="PackedScene" id=7]
 
 [sub_resource type="CylinderShape" id=4]
 
@@ -161,7 +161,7 @@ tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/imported = false
 tracks/7/enabled = true
-tracks/7/keys = PoolRealArray(  )
+tracks/7/keys = PoolRealArray( 0, 1, -3.81626, 10.0709, 7.25722, 0, 0, 0, 1, 0.1, 0.0999999, 0.1 )
 
 [sub_resource type="ParticlesMaterial" id=1]
 emission_shape = 1
