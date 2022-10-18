@@ -36,6 +36,7 @@ func _regen():
 	time_elapsed = time_now - time_start
 	if time_elapsed > 5000 && time_start != 0 :
 		_animator.play("regen")
+		fall = false
 		can_cut = true
 	
 

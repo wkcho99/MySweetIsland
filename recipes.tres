@@ -1,0 +1,20 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://addons/gloot/item_protoset.gd" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
+json_data = "[
+    {
+        \"id\": \"wall\",
+        \"name\": \"wall\",
+		\"image\": \"res://images/item_book_blue.png\",
+		\"ingredient\": {\"branch\":3}
+    },
+    {
+        \"id\": \"pickaxe\",
+        \"name\": \"pickaxe\",
+		\"image\": \"res://images/item_scroll_blue.png\",
+		\"ingredient\": {\"branch\":3, \"stone\":1}
+    }
+]"

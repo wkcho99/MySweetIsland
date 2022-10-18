@@ -122,6 +122,7 @@ func has_item(item: InventoryItem) -> bool:
 
 func add_item(item: InventoryItem) -> bool:
 	if item == null:
+		print("null")
 		return false
 	if has_item(item):
 		item.set_property("stack_size",item.get_property("stack_size")+1)
@@ -129,6 +130,7 @@ func add_item(item: InventoryItem) -> bool:
 		return true
 
 	if item.get_parent():
+		print("par")
 		item.get_parent().remove_child(item)
 
 	add_child(item)

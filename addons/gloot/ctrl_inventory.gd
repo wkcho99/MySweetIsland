@@ -9,10 +9,11 @@ export(Texture) var default_item_icon: Texture
 var inventory: Inventory = null setget _set_inventory
 var _vbox_container: VBoxContainer
 var _item_list: ItemList
-
+onready var _inventory: InventoryStacked
 const KEY_IMAGE = "image"
 const KEY_NAME = "name"
-
+var is_craftable = true
+var current_recipe = null
 
 func _get_configuration_warning() -> String:
 	if inventory_path.is_empty():
@@ -77,7 +78,6 @@ func _connect_inventory_signals() -> void:
 	if !inventory.is_connected("item_modified", self, "_on_item_modified"):
 		inventory.connect("item_modified", self, "_on_item_modified")
 
-
 func _disconnect_inventory_signals() -> void:
 	if !inventory:
 		return
@@ -90,7 +90,27 @@ func _disconnect_inventory_signals() -> void:
 
 func _on_list_item_activated(index: int) -> void:
 	emit_signal("inventory_item_activated", _get_inventory_item(index))
+	_show_recipe(index)
 
+func _show_recipe(index: int):
+	current_recipe = _get_inventory_item(index)
+	_inventory = get_node("../InventoryStacked")
+	var ingredients = _get_inventory_item(index).get_property("ingredient")
+	get_node("../CanvasLayer").visible = true
+	get_node("../CanvasLayer/RichTextLabel").text = ''
+	for ingredient in ingredients.keys():
+		var cnt
+		if(_inventory.get_item_by_id(ingredient)) == null:
+			cnt = 0
+		else:
+			cnt = _inventory._get_item_stack_size(_inventory.get_item_by_id(ingredient))
+		get_node("../CanvasLayer/RichTextLabel").text += \
+				ingredient + "(" + str(cnt)+"/"+str(ingredients[ingredient])+")"+"\n"
+		if cnt<ingredients[ingredient] :
+			is_craftable = false
+			
+	
+			
 
 func _on_item_modified(_item: InventoryItem) -> void:
 	_refresh()

@@ -52,6 +52,7 @@ onready var branch = 0
 onready var stone = 0
 onready var inventory: InventoryStacked
 var br : InventoryItem
+var is_inven_open = false
 # onready var camera_base = $CameraBase
 # onready var camera_animation = camera_base.get_node(@"Animation")
 # onready var camera_rot = camera_base.get_node(@"CameraRot")
@@ -127,8 +128,8 @@ func _physics_process(delta):
 		if dir.length() != 0:
 			animation_player.play("RUN")
 		else:
-			if !animation_player.is_playing() :
-				animation_player.play("IDLE")
+			#if !animation_player.is_playing() :
+			animation_player.play("IDLE")
 		
 		#Jump
 		if Input.is_action_pressed("move_jump") and is_on_floor():
@@ -234,6 +235,6 @@ func get_valid_building_position():
 	return null
 
 func is_actionable():
-	if time > time_when_actionable:
+	if time > time_when_actionable and !is_inven_open:
 		return true
 	return false

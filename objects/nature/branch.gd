@@ -31,9 +31,11 @@ func _process(delta):
 		get_node("../").fall = false
 		visible = false
 		get_node("../../Player").branch += 1
-		if br != null :
+		if inventory.get_item_by_id("branch") != null and inventory.has_item(inventory.get_item_by_id("branch")):
+			br = inventory.get_item_by_id("branch")
 			inventory.add_item(br)
 		else :
+			print("in else")
 			inventory.create_and_add_item("branch")
 			br = inventory.get_item_by_id("branch")
 		print(inventory.get_item_count())

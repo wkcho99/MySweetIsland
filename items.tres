@@ -22,5 +22,17 @@ json_data = "[
         \"name\": \"branch\",
 		\"stack_size\": 1,
 		\"image\": \"res://images/branch2.png\"
+    },
+	{
+        \"id\": \"wall\",
+        \"name\": \"wall\",
+		\"stack_size\": 1,
+		\"image\": \"res://images/branch2.png\"
+    },
+	{
+        \"id\": \"pickaxe\",
+        \"name\": \"pickaxe\",
+		\"stack_size\": 1,
+		\"image\": \"res://images/branch2.png\"
     }
 ]"
