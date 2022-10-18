@@ -12,7 +12,7 @@ var _item_list: ItemList
 onready var _inventory: InventoryStacked
 const KEY_IMAGE = "image"
 const KEY_NAME = "name"
-var is_craftable = true
+var is_craftable = false
 var current_recipe = null
 
 func _get_configuration_warning() -> String:
@@ -65,7 +65,7 @@ func _ready():
 
 	if has_node(inventory_path):
 		_set_inventory(get_node(inventory_path))
-
+	_inventory = get_node("../InventoryStacked")
 	_refresh()
 
 
@@ -90,14 +90,20 @@ func _disconnect_inventory_signals() -> void:
 
 func _on_list_item_activated(index: int) -> void:
 	emit_signal("inventory_item_activated", _get_inventory_item(index))
+	print("recipe"+str(index))
 	_show_recipe(index)
 
 func _show_recipe(index: int):
 	current_recipe = _get_inventory_item(index)
-	_inventory = get_node("../InventoryStacked")
 	var ingredients = _get_inventory_item(index).get_property("ingredient")
+	_print_recipe(ingredients)
+			
+	
+func _print_recipe(ingredients:Dictionary):
 	get_node("../CanvasLayer").visible = true
 	get_node("../CanvasLayer/RichTextLabel").text = ''
+	print(str(ingredients))
+	var check = false
 	for ingredient in ingredients.keys():
 		var cnt
 		if(_inventory.get_item_by_id(ingredient)) == null:
@@ -106,11 +112,13 @@ func _show_recipe(index: int):
 			cnt = _inventory._get_item_stack_size(_inventory.get_item_by_id(ingredient))
 		get_node("../CanvasLayer/RichTextLabel").text += \
 				ingredient + "(" + str(cnt)+"/"+str(ingredients[ingredient])+")"+"\n"
+		check = true
 		if cnt<ingredients[ingredient] :
 			is_craftable = false
-			
-	
-			
+			check = false
+	if check :
+		is_craftable = true
+					
 
 func _on_item_modified(_item: InventoryItem) -> void:
 	_refresh()
@@ -161,3 +169,18 @@ func _get_inventory_item(index: int) -> InventoryItem:
 	assert(index < _item_list.get_item_count())
 
 	return _item_list.get_item_metadata(index)
+func _process(delta):
+	if get_node("../CanvasLayer/Button").pressed:
+		print("craft clicked")
+		if is_craftable:
+			if _inventory.has_item(current_recipe) :
+				_inventory.add_item(current_recipe)
+			else :
+				_inventory.create_and_add_item(current_recipe.get_property("id"))
+			var ingredients = current_recipe.get_property("ingredient")
+			for ingredient in ingredients.keys():
+				for i in range(ingredients[ingredient]):
+					_inventory.remove_item(_inventory.get_item_by_id(ingredient))
+			_print_recipe(ingredients)
+		else :
+			print("can't craft!")
