@@ -30,7 +30,6 @@ func _process(delta):
 	if get_node("./Area").overlaps_body(get_node("../../Player")) && get_node("../").fall == true :
 		get_node("../").fall = false
 		visible = false
-		get_node("../../Player").branch += 1
 		if inventory.get_item_by_id("branch") != null and inventory.has_item(inventory.get_item_by_id("branch")):
 			br = inventory.get_item_by_id("branch")
 			inventory.add_item(br)

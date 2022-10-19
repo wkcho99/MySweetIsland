@@ -12,8 +12,7 @@ func _ready():
 	pass # Replace with function body.
 
 func _process(delta):
-	if get_node("../../Player/PlayerBody").branch > 0:
-		self.visible = true
+	pass
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass

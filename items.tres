@@ -12,10 +12,10 @@ json_data = "[
 		\"image\": \"res://images/item_book_blue.png\"
     },
     {
-        \"id\": \"item2\",
-        \"name\": \"item 2\",
+        \"id\": \"stone\",
+        \"name\": \"stone\",
 		\"stack_size\": 1,
-		\"image\": \"res://images/item_scroll_blue.png\"
+		\"image\": \"res://images/rock.png\"
     },
 	{
         \"id\": \"branch\",

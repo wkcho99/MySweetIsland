@@ -47,9 +47,8 @@ var camera_x_rot = 0.0
 var animation_player
 var time = 0 # time in seconds
 var time_when_actionable = 0 # time in seconds
+var last_time_hit = -2000
 var hit = false
-onready var branch = 0
-onready var stone = 0
 onready var inventory: InventoryStacked
 var br : InventoryItem
 var is_inven_open = false
@@ -64,19 +63,18 @@ func _ready():
 	if mouse_captured:
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	animation_player = get_node("Model/AnimationPlayer")
-	branch = 0
-	stone = 0
 	inventory = get_node("../InventoryStacked")
 	br = inventory.get_item_by_id("branch")
 
 func _process(delta):
 	time += delta
 
-	if Input.is_key_pressed(KEY_F) && hit == false:
+	if Input.is_key_pressed(KEY_F) && hit == false and time > last_time_hit + 1 :
 		#print(get_node(".").transform.origin.distance_to(get_node("/root/Spatial/tree/CollisionShape").transform.origin))
 		#if get_node(".").transform.origin.distance_to(get_node("/root/Spatial/tree/CollisionShape").transform.origin)<0.2 :
 		animation_player.play("ATK_AXE",-1,0.4,false)
 		hit = true
+		last_time_hit = time
 		time_when_actionable = time + animation_player.get_current_animation_length()
 		#else : hit = false
 	else : hit = false
@@ -95,7 +93,6 @@ func _process(delta):
 		var position = get_valid_building_position()
 		if position != null:
 			place_building(position)
-			self.branch -= 1
 			inventory.remove_item(br)
 		else:
 			print("No valid position")

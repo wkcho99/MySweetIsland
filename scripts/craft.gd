@@ -4,14 +4,9 @@ extends Button
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
-onready var _inventory = InventoryStacked
-onready var _recipes = Inventory
-onready var _ctrlrecipes = CtrlInventory
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	_inventory = get_node("../../InventoryStacked")
-	_recipes = get_node("../../Inventory")
-	_ctrlrecipes = get_node("../../CtrlInventory")
+	pass
 func _process(delta):
 	pass
 #	if pressed:
