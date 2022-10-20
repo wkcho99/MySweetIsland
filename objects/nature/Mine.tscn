@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://downloads/jllccg0cf20w-LowPolyModels/LowPolyModels/Material_001.material" type="Material" id=1]
 [ext_resource path="res://scripts/Mine.gd" type="Script" id=5]
@@ -62,6 +62,33 @@ tracks/1/keys = {
 "values": [ Color( 0.639216, 0.639216, 0.639216, 1 ), Color( 0.639216, 0.639216, 0.639216, 0 ) ]
 }
 
+[sub_resource type="Animation" id=8]
+resource_name = "regen"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sphere:mesh:surface_1/material:flags_transparent")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, false ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sphere:mesh:surface_1/material:albedo_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0.639216, 0.639216, 0.639216, 1 ), Color( 0.639216, 0.639216, 0.639216, 1 ) ]
+}
+
 [sub_resource type="CylinderShape" id=7]
 height = 1.03422
 
@@ -76,6 +103,7 @@ mesh = SubResource( 3 )
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/RESET = SubResource( 5 )
 anims/fall = SubResource( 6 )
+anims/regen = SubResource( 8 )
 
 [node name="Area" type="Area" parent="."]
 transform = Transform( 1.4225, 0, 0, 0, 1, 0, 0, 0, 1.58233, 0.546937, 0.208116, -0.349064 )

@@ -18,6 +18,18 @@ json_data = "[
 		\"image\": \"res://images/rock.png\"
     },
 	{
+        \"id\": \"gold\",
+        \"name\": \"gold\",
+		\"stack_size\": 1,
+		\"image\": \"res://images/rock.png\"
+    },
+	{
+        \"id\": \"soil\",
+        \"name\": \"soil\",
+		\"stack_size\": 1,
+		\"image\": \"res://images/rock.png\"
+    },
+	{
         \"id\": \"branch\",
         \"name\": \"branch\",
 		\"stack_size\": 1,

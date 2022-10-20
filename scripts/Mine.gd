@@ -10,17 +10,16 @@ var time_elapsed = time_now - time_start
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
-
+var prob = 0
 var drop_table = {0.6: "stone", 0.01:"gold", 0.39: "soil"}
-
+var dropped_item = null
+var drop_rate = 0
+var rnd
+export (int) var FORWARD_OFFSET = 10
 # Called when the node enters the scene tree for the first time.
 func _ready():
-#	var chance = RandomNumberGenerator().randfn()
-#	for drop_rate in drop_table.keys().sort():
-#		if chance < drop_rate:
-#			dropped_item = drop_table[drop_rate]
-#	var building_uri = "res://objects/nature/" + dropped_item + ".tscn"
-#	building_type = load(building_uri)
+	rnd = RandomNumberGenerator.new()
+	rnd.randomize()
 	pass # Replace with function body.
 
 func _process(delta):
@@ -41,7 +40,7 @@ func _fall():
 		fall = true
 	if get_node("Sphere").mesh.surface_get_material(0).albedo_color[3] > 0 and \
 		 get_node("../Player").hit and can_cut:
-		print("material")
+		_drop()
 #	elif get_node("Sphere").mesh.surface_get_material(0).albedo_color[3] == 0 : 
 #		time_start = OS.get_ticks_msec()
 		
@@ -49,10 +48,22 @@ func _fall():
 func _regen():
 	time_now = OS.get_ticks_msec()
 	time_elapsed = time_now - time_start
-	print(str(time_elapsed))
 	if time_elapsed > 10000 && time_start != 0 :
-		print("regen")
-#		_animator.play("regen")
+		print(str(time_elapsed))
+		_animator.play("regen")
 		fall = false
 		can_cut = true
 
+func _drop():
+	var chance = rnd.randf()
+	print(str(chance))
+	prob = 0
+	for drop_rate in drop_table.keys():
+		print(str(prob))
+		if prob<=chance and chance < prob+ drop_rate:
+			dropped_item = drop_table[drop_rate]
+		prob+= drop_rate
+	var material_url = "res://objects/nature/" + dropped_item + ".tscn"
+	var building_type = load(material_url)
+	var placing_instance = building_type.instance()
+	add_child(placing_instance)
