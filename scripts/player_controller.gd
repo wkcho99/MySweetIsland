@@ -10,21 +10,21 @@ extends KinematicBody
 
 export (bool) var can_move = true #Alow player to input movment.
 export (bool) var can_sprint = true #Alow player to toggle sprint movment.
-export (float) var move_speed = 8 #Players movement speed
-export (float) var move_speed_sprint = 16 #Players sprint movement speed
+export (float) var move_speed = 8.0 #Players movement speed
+export (float) var move_speed_sprint = 16.0 #Players sprint movement speed
 export (bool) var move_sprint = false #Player sprinting toggle
-export (float) var move_acceleration = 7 #Players acceleration to movment speed 
-export (float) var move_deacceleration = 10 #Players deacceleration from movment speed
+export (float) var move_acceleration = 7.0 #Players acceleration to movment speed 
+export (float) var move_deacceleration = 10.0 #Players deacceleration from movment speed
 export (bool) var mouse_captured = true #Toggles mouse captured mode
 export (float) var mouse_sensitivity_x = 0.3 #Mouse sensitivity X axis
 export (float) var mouse_sensitivity_y = 0.3 #Mouse sensitivity Y axis
-export (float) var mouse_max_up = 90 #Mouse max look angle up
-export (float) var mouse_max_down = -80 #Mouse max look angle down
-export (float) var Jump_speed = 6 #Players jumps speed
+export (float) var mouse_max_up = 90.0 #Mouse max look angle up
+export (float) var mouse_max_down = -80.0 #Mouse max look angle down
+export (float) var Jump_speed = 6.0 #Players jumps speed
 export (bool) var allow_fall_input = true #Alow player to input movment when falling
 export (bool) var stop_on_slope = false #Toggle sliding on slopes
-export (float) var max_slides = 4 #Maximum of slides
-export (float) var floor_max_angle = 60 #Maximum slop angle player can traverse
+export (float) var max_slides = 4.0 #Maximum of slides
+export (float) var floor_max_angle = 60.0 #Maximum slop angle player can traverse
 export (bool) var infinite_inertia = false #Toggle infinite inertia
 export (float) var gravaty = 9.81 #Gravaty acceleration
 export (Vector3) var gravaty_vector = Vector3(0, -1, 0) #Gravaty normal direction vector
@@ -200,25 +200,25 @@ func exit_building_mode():
 	placing_instance.queue_free()
 
 func place_building(position):
-	print("place")
 	var building_instance = building_type.instance()
 	world.add_child(building_instance)
 	# building_instance.set_transform(self.get_global_transform())
 	building_instance.translate(position[0])
 	building_instance.set_rotation(position[1])
-	building_instance.add_to_group(building_instance.get_name())
+	building_instance.add_to_group(BUILDINGS[building_index])
+	print("Name:", BUILDINGS[building_index])
 
 func get_valid_building_position():
-	match placing_instance.get_name():
-		"Floor":
+	match BUILDINGS[building_index]:
+		"floor":
 			print("place floor")
 			return [placing_instance.get_global_translation(), placing_instance.get_global_rotation()]
-		"Wall":
+		"wall":
 			var bottom_edge = placing_instance.get_node("Bottom")
 			var first_wall_corner = bottom_edge.get_node("Corner1")
 			var second_wall_corner = bottom_edge.get_node("Corner2")
 			
-			var floors = get_tree().get_nodes_in_group("Floor")
+			var floors = get_tree().get_nodes_in_group("floor")
 			for floor_ in floors:
 				for socket_num in range(1, 3):
 					var socket = floor_.get_node("LongEdge" + str(socket_num))
@@ -227,8 +227,20 @@ func get_valid_building_position():
 					if first_wall_corner.overlaps_area(first_socket_corner) and second_wall_corner.overlaps_area(second_socket_corner) or \
 							second_wall_corner.overlaps_area(first_socket_corner) and first_wall_corner.overlaps_area(second_socket_corner):
 						return [socket.get_global_translation(), socket.get_global_rotation()]
-		"Roof":
-			return [placing_instance.get_translation(), self.get_rotation()]
+		"roof":
+			for socket_num in range(1, 3):
+				var roof_socket = placing_instance.get_node("LongEdge" + str(socket_num))
+				var first_roof_socket_corner = roof_socket.get_node("Corner1")
+				var second_roof_socket_corner = roof_socket.get_node("Corner2")
+
+				var walls = get_tree().get_nodes_in_group("wall")
+				for wall in walls:
+					var wall_socket = wall.get_node("Top")
+					var first_wall_socket_corner = wall_socket.get_node("Corner1")
+					var second_wall_socket_corner = wall_socket.get_node("Corner2")
+					if first_wall_socket_corner.overlaps_area(first_roof_socket_corner) and second_wall_socket_corner.overlaps_area(second_roof_socket_corner) or \
+							second_wall_socket_corner.overlaps_area(first_roof_socket_corner) and first_wall_socket_corner.overlaps_area(second_roof_socket_corner):
+						return [wall_socket.get_global_translation() + (wall_socket.get_global_rotation() * roof_socket.get_translation()), wall_socket.get_global_rotation()]
 	return null
 
 func is_actionable():

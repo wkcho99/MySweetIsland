@@ -49,9 +49,9 @@ func _fall():
 func _regen():
 	time_now = OS.get_ticks_msec()
 	time_elapsed = time_now - time_start
-	print(str(time_elapsed))
+	# print(str(time_elapsed))
 	if time_elapsed > 10000 && time_start != 0 :
-		print("regen")
+		# print("regen")
 #		_animator.play("regen")
 		fall = false
 		can_cut = true
