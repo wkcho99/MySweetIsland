@@ -212,6 +212,20 @@ func get_valid_building_position():
 	match BUILDINGS[building_index]:
 		"floor":
 			print("place floor")
+			var max_distance = -INF
+			var min_distance = INF
+			var casters = placing_instance.get_node("RayCasters").get_children()
+			for caster in casters:
+				if not caster.is_colliding():
+					return null
+				else:
+					var origin = caster.global_transform.origin
+					var collision_point = caster.get_collision_point()
+					var distance = origin.distance_to(collision_point)
+					if distance < min_distance:
+						min_distance = distance
+					if distance > max_distance:
+						max_distance = distance
 			return [placing_instance.get_global_translation(), placing_instance.get_global_rotation()]
 		"wall":
 			var bottom_edge = placing_instance.get_node("Bottom")

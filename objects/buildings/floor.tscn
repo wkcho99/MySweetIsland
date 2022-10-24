@@ -72,3 +72,21 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.39232, 0, 0 )
 
 [node name="CollisionShape" type="CollisionShape" parent="LongEdge2/Corner2"]
 shape = SubResource( 5 )
+
+[node name="RayCasters" type="Spatial" parent="."]
+
+[node name="RayCast1" type="RayCast" parent="RayCasters"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.69106, 0, -2.158 )
+enabled = true
+
+[node name="RayCast2" type="RayCast" parent="RayCasters"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.52362, 0, -2.36467 )
+enabled = true
+
+[node name="RayCast3" type="RayCast" parent="RayCasters"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.74479, 0, 2.16269 )
+enabled = true
+
+[node name="RayCast4" type="RayCast" parent="RayCasters"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.6582, 0, 2.13702 )
+enabled = true
