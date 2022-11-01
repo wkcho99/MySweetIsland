@@ -38,7 +38,7 @@ export (float) var CAMERA_MOUSE_ROTATION_SPEED = 0.001
 export (int) var FORWARD_OFFSET = 10
 export (int) var STRAFE_OFFSET = 3
 export (int) var HEIGHT_DELTA_SPEED = 10
-var BUILDINGS = ["wall", "floor", "roof"]
+var BUILDINGS = ["floor", "wall", "short_wall", "roof", "foundation"]
 var building_index = 0
 var placing_instance
 var building_type = load("res://objects/buildings/" + BUILDINGS[building_index] + ".tscn")
@@ -200,18 +200,49 @@ func exit_building_mode():
 	placing_instance.queue_free()
 
 func place_building(position):
+	print("Place building")
 	var building_instance = building_type.instance()
 	world.add_child(building_instance)
 	# building_instance.set_transform(self.get_global_transform())
 	building_instance.translate(position[0])
 	building_instance.set_rotation(position[1])
 	building_instance.add_to_group(BUILDINGS[building_index])
-	print("Name:", BUILDINGS[building_index])
 
 func get_valid_building_position():
 	match BUILDINGS[building_index]:
 		"floor":
-			print("place floor")
+			# Snap to top of walls
+			for socket_num in range(1, 3):
+				var long_socket = placing_instance.get_node("LongEdge" + str(socket_num))
+				var walls = get_tree().get_nodes_in_group("wall")
+				for wall in walls:
+					var wall_socket = wall.get_node("Top")
+					if sockets_fit(long_socket, wall_socket):
+						return [wall_socket.get_global_translation() + determine_offset(long_socket, wall_socket),
+						wall_socket.get_global_rotation()]
+				var short_socket = placing_instance.get_node("ShortEdge" + str(socket_num))
+				var short_walls = get_tree().get_nodes_in_group("short_wall")
+				for wall in short_walls:
+					var wall_socket = wall.get_node("Top")
+					if sockets_fit(short_socket, wall_socket):
+						return [wall_socket.get_global_translation() + determine_offset(short_socket, wall_socket),
+						wall_socket.get_global_rotation()]
+			# Snap to other floors
+			var floors = get_tree().get_nodes_in_group("floor")
+			for socket_num in range(1, 3):
+				var long_socket = placing_instance.get_node("LongEdge" + str(socket_num))
+				var short_socket = placing_instance.get_node("ShortEdge" + str(socket_num))
+				for floor_ in floors:
+					for other_socket_num in range(1, 3):
+						var other_long_socket = floor_.get_node("LongEdge" + str(other_socket_num))
+						var other_short_socket = floor_.get_node("ShortEdge" + str(other_socket_num))
+						if sockets_fit(long_socket, other_long_socket):
+							return [other_long_socket.get_global_translation() + determine_offset(long_socket, other_long_socket), 
+											other_long_socket.get_global_rotation()]
+						if sockets_fit(short_socket, other_short_socket):
+							return [other_short_socket.get_global_translation() + determine_offset(short_socket, other_short_socket),
+											other_short_socket.get_global_rotation()]
+			# Place close to ground
 			var max_distance = -INF
 			var min_distance = INF
 			var casters = placing_instance.get_node("RayCasters").get_children()
@@ -227,37 +258,80 @@ func get_valid_building_position():
 					if distance > max_distance:
 						max_distance = distance
 			return [placing_instance.get_global_translation(), placing_instance.get_global_rotation()]
+
 		"wall":
-			var bottom_edge = placing_instance.get_node("Bottom")
-			var first_wall_corner = bottom_edge.get_node("Corner1")
-			var second_wall_corner = bottom_edge.get_node("Corner2")
-			
+			# Snap to floor
+			var wall_socket = placing_instance.get_node("Bottom")
 			var floors = get_tree().get_nodes_in_group("floor")
 			for floor_ in floors:
 				for socket_num in range(1, 3):
-					var socket = floor_.get_node("LongEdge" + str(socket_num))
-					var first_socket_corner = socket.get_node("Corner1")
-					var second_socket_corner = socket.get_node("Corner2")
-					if first_wall_corner.overlaps_area(first_socket_corner) and second_wall_corner.overlaps_area(second_socket_corner) or \
-							second_wall_corner.overlaps_area(first_socket_corner) and first_wall_corner.overlaps_area(second_socket_corner):
-						return [socket.get_global_translation(), socket.get_global_rotation()]
+					var floor_socket = floor_.get_node("LongEdge" + str(socket_num))
+					if sockets_fit(wall_socket, floor_socket):
+						return [floor_socket.get_global_translation(), floor_socket.get_global_rotation()]
+			# Snap to top of other wall
+			var walls = get_tree().get_nodes_in_group("wall")
+			for wall in walls:
+				var other_wall_socket = wall.get_node("Top")
+				if sockets_fit(wall_socket, other_wall_socket):
+					return [other_wall_socket.get_global_translation() + determine_offset(wall_socket, other_wall_socket),
+									other_wall_socket.get_global_rotation()]
+		"short_wall":
+			# Snap to floors
+			var wall_socket = placing_instance.get_node("Bottom")
+			var floors = get_tree().get_nodes_in_group("floor")
+			for floor_ in floors:
+				for socket_num in range(1, 3):
+					var floor_socket = floor_.get_node("ShortEdge" + str(socket_num))
+					if sockets_fit(wall_socket, floor_socket):
+						var rotation = floor_socket.get_global_rotation()
+						rotation.y += PI/2
+						return [floor_socket.get_global_translation(), rotation]
+			# Snap to other short walls
+			var short_walls = get_tree().get_nodes_in_group("short_wall")
+			for wall in short_walls:
+				var other_wall_socket = wall.get_node("Top")
+				if sockets_fit(wall_socket, other_wall_socket):
+					return [other_wall_socket.get_global_translation() + determine_offset(wall_socket, other_wall_socket),
+									other_wall_socket.get_global_rotation()]
 		"roof":
 			for socket_num in range(1, 3):
 				var roof_socket = placing_instance.get_node("LongEdge" + str(socket_num))
-				var first_roof_socket_corner = roof_socket.get_node("Corner1")
-				var second_roof_socket_corner = roof_socket.get_node("Corner2")
-
 				var walls = get_tree().get_nodes_in_group("wall")
 				for wall in walls:
 					var wall_socket = wall.get_node("Top")
-					var first_wall_socket_corner = wall_socket.get_node("Corner1")
-					var second_wall_socket_corner = wall_socket.get_node("Corner2")
-					if first_wall_socket_corner.overlaps_area(first_roof_socket_corner) and second_wall_socket_corner.overlaps_area(second_roof_socket_corner) or \
-							second_wall_socket_corner.overlaps_area(first_roof_socket_corner) and first_wall_socket_corner.overlaps_area(second_roof_socket_corner):
-						return [wall_socket.get_global_translation() + (wall_socket.get_global_rotation() * roof_socket.get_translation()), wall_socket.get_global_rotation()]
+					if sockets_fit(roof_socket, wall_socket):
+						return [wall_socket.get_global_translation() + determine_offset(roof_socket, wall_socket),
+										wall_socket.get_global_rotation()]
+		"foundation":
+			# Place in terrain
+			var up_casters = placing_instance.get_node("UpRays").get_children()
+			for caster in up_casters:
+				if caster.is_colliding():
+					print("up collision")
+					return null
+			var down_casters = placing_instance.get_node("DownRays").get_children()
+			for caster in down_casters:
+				if caster.is_colliding():
+					print("down collision")
+					return null
+			return [placing_instance.get_global_translation(), placing_instance.get_global_rotation()]
 	return null
 
+func sockets_fit(socket, other_socket):
+	return socket.get_node("Corner1").overlaps_area(other_socket.get_node("Corner1")) and \
+				 	socket.get_node("Corner2").overlaps_area(other_socket.get_node("Corner2")) or \
+				 socket.get_node("Corner2").overlaps_area(other_socket.get_node("Corner1")) and \
+					socket.get_node("Corner1").overlaps_area(other_socket.get_node("Corner2"))
+
+func determine_offset(socket, other_socket):
+	var offset = socket.get_translation().rotated(Vector3.UP, other_socket.get_global_rotation().y)
+	var pos_positive = other_socket.get_global_translation() + offset
+	var pos_negative = other_socket.get_global_translation() - offset
+	if placing_instance.get_global_translation().distance_to(pos_positive) < placing_instance.get_global_translation().distance_to(pos_negative):
+		return offset
+	return -offset
+
 func is_actionable():
-	if time > time_when_actionable and !is_inven_open:
+	if time > time_when_actionable and not is_inven_open:
 		return true
 	return false

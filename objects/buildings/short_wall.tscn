@@ -1,44 +1,44 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://downloads/wall/BentWood Planks.obj" type="ArrayMesh" id=1]
+[sub_resource type="CubeMesh" id=4]
+size = Vector3( 4, 4.7, 0.1 )
 
-[sub_resource type="SpatialMaterial" id=2]
-albedo_color = Color( 0.545098, 0.137255, 0.137255, 1 )
+[sub_resource type="SpatialMaterial" id=1]
+resource_name = "wire_135059008"
+albedo_color = Color( 0.5294, 0.2314, 0.0314, 1 )
+metallic = 0.35
 
-[sub_resource type="BoxShape" id=1]
-extents = Vector3( 4.64, 0.09, 2.34 )
+[sub_resource type="BoxShape" id=5]
+extents = Vector3( 2.3, 0.09, 2.34 )
 
 [sub_resource type="BoxShape" id=3]
 
 [node name="Wall" type="Spatial"]
 
+[node name="MeshInstance" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.22476, 0 )
+mesh = SubResource( 4 )
+material/0 = SubResource( 1 )
+
 [node name="StaticBody" type="StaticBody" parent="."]
 transform = Transform( -1, -8.74228e-08, 3.82137e-15, 0, -4.37114e-08, -1, 8.74228e-08, -1, 4.37114e-08, 0, 2.24046, 0 )
 
-[node name="WallMesh" type="MeshInstance" parent="StaticBody"]
-transform = Transform( 0.01, 0, 0, 0, 0.01, 0, 0, 0, 0.01, 0, 0, 0 )
-mesh = ExtResource( 1 )
-material/14 = SubResource( 2 )
-__meta__ = {
-"_editor_description_": "			"
-}
-
 [node name="CollisionShape" type="CollisionShape" parent="StaticBody"]
 transform = Transform( 0.861622, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
-shape = SubResource( 1 )
+shape = SubResource( 5 )
 
 [node name="Top" type="Spatial" parent="."]
-transform = Transform( 1, 0, -1.67038e-22, 0, 1, 0, 1.67038e-22, 0, 1, 0, 4.58941, 0 )
+transform = Transform( 1, 0, 1.67037e-22, 0, 1, 0, 1.67038e-22, 0, 1, 0, 4.58941, 0 )
 
 [node name="Corner1" type="Area" parent="Top"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.68583, 0, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.07068, 0, 2.69791e-22 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Top/Corner1"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.122967, 0 )
 shape = SubResource( 3 )
 
 [node name="Corner2" type="Area" parent="Top"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.49748, 0, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.06214, 0, -2.39756e-22 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Top/Corner2"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.122967, 0 )
@@ -47,14 +47,14 @@ shape = SubResource( 3 )
 [node name="Bottom" type="Spatial" parent="."]
 
 [node name="Corner1" type="Area" parent="Bottom"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.68583, 0, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08443, 0, 0 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Bottom/Corner1"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.122967, 0 )
 shape = SubResource( 3 )
 
 [node name="Corner2" type="Area" parent="Bottom"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.49748, 0, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.12357, 0, 0 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Bottom/Corner2"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.122967, 0 )
