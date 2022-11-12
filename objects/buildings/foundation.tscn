@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
 [sub_resource type="BoxShape" id=1]
 
@@ -7,10 +7,14 @@
 [sub_resource type="SpatialMaterial" id=3]
 albedo_color = Color( 0.533333, 0.533333, 0.533333, 1 )
 
+[sub_resource type="BoxShape" id=4]
+
+[sub_resource type="BoxShape" id=5]
+
 [node name="Foundation" type="Spatial"]
 
 [node name="StaticBody" type="StaticBody" parent="."]
-transform = Transform( 3.53109, 0, 0, 0, 1, 0, 0, 0, 2.13206, -0.135286, 0, 0 )
+transform = Transform( 3.53109, 0, 0, 0, 1, 0, 0, 0, 2.13206, -0.135286, -0.980008, 0 )
 
 [node name="CollisionShape" type="CollisionShape" parent="StaticBody"]
 shape = SubResource( 1 )
@@ -20,7 +24,7 @@ mesh = SubResource( 2 )
 material/0 = SubResource( 3 )
 
 [node name="UpRays" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0204325, 1.05275, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0204325, 0.072742, 0 )
 
 [node name="RayCast1" type="RayCast" parent="UpRays"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.475, 0, 2.114 )
@@ -47,7 +51,7 @@ cast_to = Vector3( 0, 2, 0 )
 debug_shape_custom_color = Color( 0.929412, 0.0235294, 0.0235294, 1 )
 
 [node name="DownRays" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.01245, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.99246, 0 )
 
 [node name="RayCast1" type="RayCast" parent="DownRays"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.475, 0, 2.114 )
@@ -72,3 +76,63 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.658, 0, -2.139 )
 enabled = true
 cast_to = Vector3( 0, -10, 0 )
 debug_shape_custom_color = Color( 0, 0.6, 1, 1 )
+
+[node name="LongEdge1" type="Spatial" parent="."]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 2.33319 )
+
+[node name="Corner1" type="Area" parent="LongEdge1"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.49636, 0, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="LongEdge1/Corner1"]
+shape = SubResource( 4 )
+
+[node name="Corner2" type="Area" parent="LongEdge1"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.39232, 0, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="LongEdge1/Corner2"]
+shape = SubResource( 5 )
+
+[node name="LongEdge2" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.20943 )
+
+[node name="Corner1" type="Area" parent="LongEdge2"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.49636, 0, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="LongEdge2/Corner1"]
+shape = SubResource( 4 )
+
+[node name="Corner2" type="Area" parent="LongEdge2"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.39232, 0, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="LongEdge2/Corner2"]
+shape = SubResource( 5 )
+
+[node name="ShortEdge1" type="Spatial" parent="."]
+transform = Transform( -1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 3.56117, 0, 0 )
+
+[node name="Corner1" type="Area" parent="ShortEdge1"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0509617, 0, -2.31426 )
+
+[node name="CollisionShape" type="CollisionShape" parent="ShortEdge1/Corner1"]
+shape = SubResource( 4 )
+
+[node name="Corner2" type="Area" parent="ShortEdge1"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.186203, 0, 2.22226 )
+
+[node name="CollisionShape" type="CollisionShape" parent="ShortEdge1/Corner2"]
+shape = SubResource( 5 )
+
+[node name="ShortEdge2" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.371, 0, 0 )
+
+[node name="Corner1" type="Area" parent="ShortEdge2"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.14191, 0, -2.1932 )
+
+[node name="CollisionShape" type="CollisionShape" parent="ShortEdge2/Corner1"]
+shape = SubResource( 4 )
+
+[node name="Corner2" type="Area" parent="ShortEdge2"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0489752, 0, 2.3217 )
+
+[node name="CollisionShape" type="CollisionShape" parent="ShortEdge2/Corner2"]
+shape = SubResource( 5 )

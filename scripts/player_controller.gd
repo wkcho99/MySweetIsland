@@ -13,24 +13,25 @@ export (bool) var can_sprint = true #Alow player to toggle sprint movment.
 export (float) var move_speed = 8.0 #Players movement speed
 export (float) var move_speed_sprint = 16.0 #Players sprint movement speed
 export (bool) var move_sprint = false #Player sprinting toggle
-export (float) var move_acceleration = 7.0 #Players acceleration to movment speed 
+export (float) var move_acceleration = 10.0 #Players acceleration to movment speed 
 export (float) var move_deacceleration = 10.0 #Players deacceleration from movment speed
 export (bool) var mouse_captured = true #Toggles mouse captured mode
 export (float) var mouse_sensitivity_x = 0.3 #Mouse sensitivity X axis
 export (float) var mouse_sensitivity_y = 0.3 #Mouse sensitivity Y axis
 export (float) var mouse_max_up = 90.0 #Mouse max look angle up
 export (float) var mouse_max_down = -80.0 #Mouse max look angle down
-export (float) var Jump_speed = 6.0 #Players jumps speed
+export (float) var jump_speed = 25.0 #Players jumps speed
 export (bool) var allow_fall_input = true #Alow player to input movment when falling
 export (bool) var stop_on_slope = false #Toggle sliding on slopes
 export (float) var max_slides = 4.0 #Maximum of slides
 export (float) var floor_max_angle = 60.0 #Maximum slop angle player can traverse
 export (bool) var infinite_inertia = false #Toggle infinite inertia
-export (float) var gravaty = 9.81 #Gravaty acceleration
-export (Vector3) var gravaty_vector = Vector3(0, -1, 0) #Gravaty normal direction vector
+export (float) var gravity = 9.81 #gravity acceleration
+export (Vector3) var gravity_vector = Vector3(0, -1, 0) #gravity normal direction vector
 export (Vector3) var floor_normal = Vector3(0, 1, 0) #Floor normal direction vector
 export (Vector3) var jump_vector = Vector3(0, 1, 0) #Jump normal direction vector
 export (Vector3) var velocity = Vector3(0, 0, 0) #Initial velocity
+export (float) var weight = 9.0
 
 export (int) var CAMERA_X_ROT_MIN = -30
 export (int) var CAMERA_X_ROT_MAX = 30
@@ -38,7 +39,7 @@ export (float) var CAMERA_MOUSE_ROTATION_SPEED = 0.001
 export (int) var FORWARD_OFFSET = 10
 export (int) var STRAFE_OFFSET = 3
 export (int) var HEIGHT_DELTA_SPEED = 10
-var BUILDINGS = ["floor", "wall", "short_wall", "roof", "foundation"]
+var BUILDINGS = ["floor", "wall", "short_wall", "roof", "foundation", "stairs"] # TODO: add stairs
 var building_index = 0
 var placing_instance
 var building_type = load("res://objects/buildings/" + BUILDINGS[building_index] + ".tscn")
@@ -130,7 +131,7 @@ func _physics_process(delta):
 		
 		#Jump
 		if Input.is_action_pressed("move_jump") and is_on_floor():
-			velocity += jump_vector * Jump_speed - (jump_vector * -1).normalized() * velocity.dot(jump_vector * -1)
+			velocity += jump_vector * jump_speed - (jump_vector * -1).normalized() * velocity.dot(jump_vector * -1)
 	
 		#Sprint toggle
 		if can_sprint and Input.is_action_just_pressed("move_sprint") and is_on_floor():
@@ -143,14 +144,14 @@ func _physics_process(delta):
 	dir = transform.basis.xform(dir.normalized()) * (move_speed_sprint if move_sprint else move_speed)
 	if is_on_floor() or dir != Vector3(0, 0, 0):
 		var acceleration = move_acceleration if dir.dot(velocity) else move_deacceleration
-		var vp = gravaty_vector.normalized() * velocity.dot(gravaty_vector)
+		var vp = gravity_vector.normalized() * velocity.dot(gravity_vector)
 		velocity = (velocity - vp).linear_interpolate(dir, acceleration * delta) + vp
 	
 
-	#Gravaty
+	#gravity
 	if !is_on_floor():
 		animation_player.play("IDLE_ITEM")
-		velocity += gravaty_vector * gravaty * delta
+		velocity += gravity_vector * gravity * weight * delta
 
 	#Player move
 	move_and_slide(velocity, floor_normal, stop_on_slope, max_slides, deg2rad(floor_max_angle), infinite_inertia)
@@ -180,7 +181,7 @@ func enter_building_mode():
 	placing_instance.translate_object_local(building_offset)
 	
 func change_building_height():
-	var height = camera_x_rot * HEIGHT_DELTA_SPEED
+	var height = camera_x_rot * HEIGHT_DELTA_SPEED + 5
 	var new_building_pos = Vector3(placing_instance.translation.x, height, placing_instance.translation.z)
 	placing_instance.set_translation(new_building_pos)
 
@@ -227,6 +228,23 @@ func get_valid_building_position():
 					if sockets_fit(short_socket, wall_socket):
 						return [wall_socket.get_global_translation() + determine_offset(short_socket, wall_socket),
 						wall_socket.get_global_rotation()]
+			# Snap to foundations
+			var foundations = get_tree().get_nodes_in_group("foundation")
+			for socket_num in range(1, 3):
+				var long_socket = placing_instance.get_node("LongEdge" + str(socket_num))
+				var short_socket = placing_instance.get_node("ShortEdge" + str(socket_num))
+				for foundation in foundations:
+					for other_socket_num in range(1, 3):
+						var other_long_socket = foundation.get_node("LongEdge" + str(other_socket_num))
+						var other_short_socket = foundation.get_node("ShortEdge" + str(other_socket_num))
+						if sockets_fit(long_socket, other_long_socket) and sockets_fit(short_socket, other_short_socket):
+							return [foundation.get_global_translation() + Vector3.UP*0.015, 
+											foundation.get_global_rotation()]
+			# Place close to ground
+			var casters = placing_instance.get_node("RayCasters").get_children()
+			for caster in casters:
+				if not caster.is_colliding():
+					return null
 			# Snap to other floors
 			var floors = get_tree().get_nodes_in_group("floor")
 			for socket_num in range(1, 3):
@@ -242,21 +260,6 @@ func get_valid_building_position():
 						if sockets_fit(short_socket, other_short_socket):
 							return [other_short_socket.get_global_translation() + determine_offset(short_socket, other_short_socket),
 											other_short_socket.get_global_rotation()]
-			# Place close to ground
-			var max_distance = -INF
-			var min_distance = INF
-			var casters = placing_instance.get_node("RayCasters").get_children()
-			for caster in casters:
-				if not caster.is_colliding():
-					return null
-				else:
-					var origin = caster.global_transform.origin
-					var collision_point = caster.get_collision_point()
-					var distance = origin.distance_to(collision_point)
-					if distance < min_distance:
-						min_distance = distance
-					if distance > max_distance:
-						max_distance = distance
 			return [placing_instance.get_global_translation(), placing_instance.get_global_rotation()]
 
 		"wall":
@@ -313,6 +316,28 @@ func get_valid_building_position():
 			for caster in down_casters:
 				if caster.is_colliding():
 					print("down collision")
+					return null
+			# Snap to other foundations
+			var foundations = get_tree().get_nodes_in_group("foundation")
+			for socket_num in range(1, 3):
+				var long_socket = placing_instance.get_node("LongEdge" + str(socket_num))
+				var short_socket = placing_instance.get_node("ShortEdge" + str(socket_num))
+				for foundation in foundations:
+					for other_socket_num in range(1, 3):
+						var other_long_socket = foundation.get_node("LongEdge" + str(other_socket_num))
+						var other_short_socket = foundation.get_node("ShortEdge" + str(other_socket_num))
+						if sockets_fit(long_socket, other_long_socket):
+							return [other_long_socket.get_global_translation() + determine_offset(long_socket, other_long_socket), 
+											other_long_socket.get_global_rotation()]
+						if sockets_fit(short_socket, other_short_socket):
+							return [other_short_socket.get_global_translation() + determine_offset(short_socket, other_short_socket),
+											other_short_socket.get_global_rotation()]
+			return [placing_instance.get_global_translation(), placing_instance.get_global_rotation()]
+		"stairs":
+			# Place close to ground
+			var casters = placing_instance.get_node("RayCasters").get_children()
+			for caster in casters:
+				if not caster.is_colliding():
 					return null
 			return [placing_instance.get_global_translation(), placing_instance.get_global_rotation()]
 	return null
