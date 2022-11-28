@@ -179,6 +179,7 @@ func rotate_camera(move):
 
 func enter_building_mode():
 	print("enter")
+	get_node("../CanvasLayer2/build").visible = false
 	placing_instance = building_type.instance()
 	placing_instance.set_visible(false)
 	visual_instance = building_type.instance()

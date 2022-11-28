@@ -2,9 +2,9 @@ extends Spatial
 
 onready var _animator := get_node("AnimationPlayer")
 onready var world = get_node("/root/World")
+onready var _particles = get_node("Particles")
 var fall = false
 var can_cut = false
-onready var _particles := $Particles
 var time_start = 0
 var time_now = 0
 var time_elapsed = time_now - time_start
@@ -12,7 +12,7 @@ var time_elapsed = time_now - time_start
 # var a = 2
 # var b = "text"
 var prob = 0
-var drop_table = {0.6: "stone", 0.01:"gold", 0.39: "soil"}
+var drop_table = {0.55: "stone", 0.05:"gold", 0.4: "soil"}
 var dropped_item = null
 var drop_rate = 0
 var rnd
@@ -42,13 +42,15 @@ func _fall():
 		_animator.play("fall")
 		time_start = OS.get_ticks_msec()
 		fall = true
+		print(world)
 		world.has_mined = true
 		_particles.emitting = false
 	if get_node("Sphere").mesh.surface_get_material(0).albedo_color[3] > 0 and \
 		 get_node("../Player").hit and can_cut:
 		_drop()
-#	elif get_node("Sphere").mesh.surface_get_material(0).albedo_color[3] == 0 : 
-#		time_start = OS.get_ticks_msec()
+	elif get_node("Sphere").mesh.surface_get_material(0).albedo_color[3] == 0 : 
+		get_node("Area/CollisionShape").disabled = true
+		get_node("StaticBody/CollisionShape").disabled = true
 		
 		
 func _regen():
@@ -59,17 +61,22 @@ func _regen():
 		_animator.play("regen")
 		fall = false
 		can_cut = true
+		get_node("Area/CollisionShape").disabled = false
+		get_node("StaticBody/CollisionShape").disabled = false
+	
 
 func _drop():
 	var chance = rnd.randf()
 	print(str(chance))
 	prob = 0
 	for drop_rate in drop_table.keys():
-		print(str(prob))
 		if prob<=chance and chance < prob+ drop_rate:
 			dropped_item = drop_table[drop_rate]
 		prob+= drop_rate
+	print(dropped_item)
 	var material_url = "res://objects/nature/" + dropped_item + ".tscn"
 	var building_type = load(material_url)
 	var placing_instance = building_type.instance()
 	add_child(placing_instance)
+	var pos = rnd.randi_range(3,5)
+	placing_instance.translate(Vector3(pos,0,0))

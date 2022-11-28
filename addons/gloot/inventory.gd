@@ -230,3 +230,9 @@ func deserialize(source: Dictionary) -> bool:
 
 	return true
 
+func save():
+	var save_dict = {
+		"items": _items
+		
+	}
+	return save_dict
