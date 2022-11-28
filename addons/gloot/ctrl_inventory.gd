@@ -96,7 +96,8 @@ func _on_list_item_activated(index: int) -> void:
 func _show_recipe(index: int):
 	current_recipe = _get_inventory_item(index)
 	var ingredients = _get_inventory_item(index).get_property("ingredient")
-	_print_recipe(ingredients)
+	if ingredients != null :
+		_print_recipe(ingredients)
 			
 	
 func _print_recipe(ingredients:Dictionary):

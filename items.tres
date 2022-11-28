@@ -21,13 +21,13 @@ json_data = "[
         \"id\": \"gold\",
         \"name\": \"gold\",
 		\"stack_size\": 1,
-		\"image\": \"res://images/rock.png\"
+		\"image\": \"res://images/gold.png\"
     },
 	{
         \"id\": \"soil\",
         \"name\": \"soil\",
 		\"stack_size\": 1,
-		\"image\": \"res://images/rock.png\"
+		\"image\": \"res://images/soil.png\"
     },
 	{
         \"id\": \"branch\",

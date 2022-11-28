@@ -16,7 +16,6 @@ func _ready():
 	set_axis_lock(32, true)
 	inventory = get_node("../../InventoryStacked")
 	br = inventory.get_item_by_id("branch")
-	inventory.remove_all_items()
 	pass # Replace with function body.
 
 func _process(delta):
@@ -27,9 +26,10 @@ func _process(delta):
 		set_axis_lock(4, false)
 		#add_force(Vector3(-10,-10,-10),Vector3(-10,-10,-10))
 		
-	if get_node("./Area").overlaps_body(get_node("../../Player")) && get_node("../").fall == true :
+	if get_node("./Area").overlaps_body(get_node("../../Player")):
 		get_node("../").fall = false
 		visible = false
+		queue_free()
 		if inventory.get_item_by_id("branch") != null and inventory.has_item(inventory.get_item_by_id("branch")):
 			br = inventory.get_item_by_id("branch")
 			inventory.add_item(br)
