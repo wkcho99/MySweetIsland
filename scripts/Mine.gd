@@ -1,6 +1,7 @@
 extends Spatial
 
 onready var _animator := get_node("AnimationPlayer")
+onready var world = get_node("/root/World")
 var fall = false
 var can_cut = false
 onready var _particles := $Particles
@@ -20,6 +21,9 @@ export (int) var FORWARD_OFFSET = 10
 func _ready():
 	rnd = RandomNumberGenerator.new()
 	rnd.randomize()
+
+	_particles.emitting = false
+	add_to_group("mines")
 	pass # Replace with function body.
 
 func _process(delta):
@@ -38,6 +42,8 @@ func _fall():
 		_animator.play("fall")
 		time_start = OS.get_ticks_msec()
 		fall = true
+		world.has_mined = true
+		_particles.emitting = false
 	if get_node("Sphere").mesh.surface_get_material(0).albedo_color[3] > 0 and \
 		 get_node("../Player").hit and can_cut:
 		_drop()

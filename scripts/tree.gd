@@ -5,6 +5,8 @@ extends Spatial
 # var a = 2
 # var b = "text"
 onready var _animator := get_node("RootNode/AnimationPlayer")
+onready var player = get_node("/root/World/Player")
+onready var world = get_node("/root/World")
 var fall = false
 var can_cut = false
 onready var _particles := $Particles
@@ -13,10 +15,12 @@ var time_now = 0
 var time_elapsed = time_now - time_start
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	_particles.emitting = false
+	add_to_group("trees")
 	pass
 
 func _process(delta):
-	if get_node("./RootNode/Area").overlaps_body(get_node("../Player")) :
+	if get_node("./RootNode/Area").overlaps_body(player) :
 		can_cut = true
 	else: can_cut = false
 	#if get_node("./Area").overlaps_body(get_node("../Player/PlayerBody")) :
@@ -25,9 +29,10 @@ func _process(delta):
 	_regen()
 
 func _fall():
-	if get_node("../Player").hit && fall == false && can_cut: 
+	if player.hit && fall == false && can_cut: 
 		_animator.play("fall")
 		fall = true
+		world.has_cut_tree = true
 		_particles.emitting = false
 		time_start = OS.get_ticks_msec()
 
@@ -38,8 +43,3 @@ func _regen():
 		_animator.play("regen")
 		fall = false
 		can_cut = true
-	
-
-
-func _sparkle():
-	pass

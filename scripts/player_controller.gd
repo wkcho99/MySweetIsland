@@ -42,6 +42,7 @@ export (int) var HEIGHT_DELTA_SPEED = 10
 var BUILDINGS = ["floor", "wall", "short_wall", "roof", "foundation", "stairs"] # TODO: add stairs
 var building_index = 0
 var placing_instance
+var visual_instance
 var building_type = load("res://objects/buildings/" + BUILDINGS[building_index] + ".tscn")
 var is_placing = false
 var camera_x_rot = 0.0
@@ -90,16 +91,19 @@ func _process(delta):
 	if Input.is_action_just_pressed("cycle_building") and is_placing:
 		cycle_building_type()
 
-	if Input.is_action_just_pressed("place_building") and is_placing: # and self.branch > 0:
-		var position = get_valid_building_position()
-		if position != null:
-			place_building(position)
-			inventory.remove_item(br)
-		else:
-			print("No valid position")
 	
 	if is_placing:
-		change_building_height()
+		var position = get_valid_building_position()
+		change_building_pos(position)
+		show_if_valid_pos(position)
+		if Input.is_action_just_pressed("place_building"): # and self.branch > 0:
+			if position != null:
+				place_building(position)
+				inventory.remove_item(br)
+			else:
+				print("No valid position")
+	
+	
 
 func _physics_process(delta):
 	
@@ -118,7 +122,7 @@ func _physics_process(delta):
 		#Forward
 		if Input.is_action_pressed("move_forward"):
 			dir.z += 1;
-			
+
 		#Backwards	
 		if Input.is_action_pressed("move_backwards"):
 			dir.z -= 1
@@ -176,14 +180,34 @@ func rotate_camera(move):
 func enter_building_mode():
 	print("enter")
 	placing_instance = building_type.instance()
+	placing_instance.set_visible(false)
+	visual_instance = building_type.instance()
 	var building_offset = Vector3(0, 0, FORWARD_OFFSET)
 	add_child(placing_instance)
+	add_child(visual_instance)
 	placing_instance.translate_object_local(building_offset)
+	visual_instance.translate_object_local(building_offset)
 	
-func change_building_height():
+func change_building_pos(position):
 	var height = camera_x_rot * HEIGHT_DELTA_SPEED + 5
 	var new_building_pos = Vector3(placing_instance.translation.x, height, placing_instance.translation.z)
 	placing_instance.set_translation(new_building_pos)
+	visual_instance.set_translation(new_building_pos)
+	if position != null:
+		visual_instance.set_global_translation(position[0])
+		visual_instance.set_global_rotation(position[1])
+	else:
+		visual_instance.set_translation(placing_instance.get_translation())
+		visual_instance.set_rotation(placing_instance.get_rotation())
+
+func show_if_valid_pos(position):
+	var mesh = visual_instance.get_node("StaticBody/MeshInstance")
+	var override_material
+	if position == null:
+		override_material = load("res://materials/unplaceable.tres")
+	else:
+		override_material = load("res://materials/placeable.tres")
+	mesh.set_material_override(override_material)
 
 func cycle_building_type():
 	exit_building_mode()
@@ -199,6 +223,7 @@ func cycle_building_type():
 func exit_building_mode():
 	print("exit")
 	placing_instance.queue_free()
+	visual_instance.queue_free()
 
 func place_building(position):
 	print("Place building")
@@ -305,6 +330,13 @@ func get_valid_building_position():
 					if sockets_fit(roof_socket, wall_socket):
 						return [wall_socket.get_global_translation() + determine_offset(roof_socket, wall_socket),
 										wall_socket.get_global_rotation()]
+				var short_socket = placing_instance.get_node("ShortEdge" + str(socket_num))
+				var short_walls = get_tree().get_nodes_in_group("short_wall")
+				for wall in short_walls:
+					var wall_socket = wall.get_node("Top")
+					if sockets_fit(short_socket, wall_socket):
+						return [wall_socket.get_global_translation() + determine_offset(short_socket, wall_socket),
+						wall_socket.get_global_rotation()]
 		"foundation":
 			# Place in terrain
 			var up_casters = placing_instance.get_node("UpRays").get_children()

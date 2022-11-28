@@ -16,7 +16,7 @@ extents = Vector3( 4.64, 0.09, 2.34 )
 
 [node name="StaticBody" type="StaticBody" parent="."]
 
-[node name="WallMesh" type="MeshInstance" parent="StaticBody"]
+[node name="MeshInstance" type="MeshInstance" parent="StaticBody"]
 transform = Transform( 0.01, 0, 0, 0, 0.01, 0, 0, 0, 0.01, 0, 0, 0 )
 mesh = ExtResource( 1 )
 material/14 = SubResource( 2 )
