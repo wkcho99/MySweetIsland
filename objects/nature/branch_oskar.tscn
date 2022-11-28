@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://materials/trunk.tres" type="Material" id=1]
-[ext_resource path="res://objects/nature/branch.gd" type="Script" id=2]
+[ext_resource path="res://objects/nature/branch.gd" type="Script" id=1]
+[ext_resource path="res://materials/trunk.tres" type="Material" id=2]
 
 [sub_resource type="CylinderShape" id=3]
 
@@ -22,7 +22,7 @@ surfaces/0 = {
 [node name="Spatial" type="RigidBody"]
 transform = Transform( 0.1, 2.44595e-05, 4.43717e-05, 4.3017e-05, 0.00528856, -0.09986, -2.67704e-05, 0.0998601, 0.00528855, 0, 0, 0 )
 can_sleep = false
-script = ExtResource( 2 )
+script = ExtResource( 1 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 2.24524, -5.82077e-10, -1.81899e-10, 2.32831e-10, 4.98762, 5.21541e-08, 1.45519e-11, -8.9407e-08, 1.983, 0.274077, 3.44214, -0.119556 )
@@ -38,4 +38,4 @@ shape = SubResource( 3 )
 [node name="Cylinder" type="MeshInstance" parent="."]
 transform = Transform( 100, 4.19095e-09, -1.86265e-09, 3.72529e-09, -3.57628e-05, 100, 1.16415e-09, -100, -3.57628e-05, 0, 0, 0 )
 mesh = SubResource( 2 )
-material/0 = ExtResource( 1 )
+material/0 = ExtResource( 2 )
