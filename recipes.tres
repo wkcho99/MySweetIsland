@@ -5,16 +5,40 @@
 [resource]
 script = ExtResource( 1 )
 json_data = "[
-    {
-        \"id\": \"wall\",
-        \"name\": \"wall\",
-		\"image\": \"res://images/item_book_blue.png\",
+	{
+        \"id\": \"short_wall\",
+        \"name\": \"short_wall\",
+		\"image\": \"res://images/short_wall.png\",
 		\"ingredient\": {\"branch\":1}
     },
     {
-        \"id\": \"pickaxe\",
-        \"name\": \"pickaxe\",
-		\"image\": \"res://images/item_scroll_blue.png\",
-		\"ingredient\": {\"branch\":3, \"stone\":1}
+        \"id\": \"wall\",
+        \"name\": \"wall\",
+		\"image\": \"res://images/wall.png\",
+		\"ingredient\": {\"branch\":3}
+    },
+	{
+        \"id\": \"floor\",
+        \"name\": \"floor\",
+		\"image\": \"res://images/floor.png\",
+		\"ingredient\": {\"branch\":5}
+    },
+	{
+        \"id\": \"roof\",
+        \"name\": \"roof\",
+		\"image\": \"res://images/roof.png\",
+		\"ingredient\": {\"soil\":3, \"branch\":2}
+    },
+	{
+        \"id\": \"foundation\",
+        \"name\": \"foundation\",
+		\"image\": \"res://images/foundation.png\",
+		\"ingredient\": {\"stone\":3, \"soil\":3}
+    },
+	{
+        \"id\": \"stairs\",
+        \"name\": \"stairs\",
+		\"image\": \"res://images/stairs.png\",
+		\"ingredient\": {\"branch\":3, \"stone\":3}
     }
 ]"

@@ -6,12 +6,6 @@
 script = ExtResource( 1 )
 json_data = "[
     {
-        \"id\": \"item1\",
-        \"name\": \"item 1\",
-		\"stack_size\": 1,
-		\"image\": \"res://images/item_book_blue.png\"
-    },
-    {
         \"id\": \"stone\",
         \"name\": \"stone\",
 		\"stack_size\": 1,
@@ -36,15 +30,45 @@ json_data = "[
 		\"image\": \"res://images/branch2.png\"
     },
 	{
+        \"id\": \"short_wall\",
+        \"name\": \"short_wall\",
+		\"stack_size\": 1,
+		\"image\": \"res://images/short_wall.png\",
+		\"ingredient\": {\"branch\":1}
+    },
+    {
         \"id\": \"wall\",
         \"name\": \"wall\",
 		\"stack_size\": 1,
-		\"image\": \"res://images/branch2.png\"
+		\"image\": \"res://images/wall.png\",
+		\"ingredient\": {\"branch\":3}
     },
 	{
-        \"id\": \"pickaxe\",
-        \"name\": \"pickaxe\",
+        \"id\": \"floor\",
+        \"name\": \"floor\",
 		\"stack_size\": 1,
-		\"image\": \"res://images/branch2.png\"
+		\"image\": \"res://images/floor.png\",
+		\"ingredient\": {\"branch\":3}
+    },
+	{
+        \"id\": \"roof\",
+        \"name\": \"roof\",
+		\"stack_size\": 1,
+		\"image\": \"res://images/roof.png\",
+		\"ingredient\": {\"soil\":3, \"branch\":2}
+    },
+	{
+        \"id\": \"foundation\",
+        \"name\": \"foundation\",
+		\"stack_size\": 1,
+		\"image\": \"res://images/foundation.png\",
+		\"ingredient\": {\"stone\":3, \"soil\":3}
+    },
+	{
+        \"id\": \"stairs\",
+        \"name\": \"stairs\",
+		\"stack_size\": 1,
+		\"image\": \"res://images/stairs.png\",
+		\"ingredient\": {\"branch\":3, \"stone\":3}
     }
 ]"

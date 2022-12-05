@@ -27,6 +27,9 @@ func _ready() -> void:
 	_inventory.hide()
 	inventoryManager = get_node("InventoryStacked")
 	inventoryManager.remove_all_items()
+	var player_position = $Player.transform.origin
+#	get_node("villager1/Path/PathFollow/RigidBody").initialize(get_node("villager1/Path/PathFollow/RigidBody").transform.origin, player_position)
+#	$villager2.initialize($villager2.transform.origin, player_position)
 
 	prev_tree = get_node("Scatter3D/tree")
 
@@ -146,3 +149,4 @@ func build_tutorial():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
+
