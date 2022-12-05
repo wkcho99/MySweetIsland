@@ -171,17 +171,35 @@ func _get_inventory_item(index: int) -> InventoryItem:
 
 	return _item_list.get_item_metadata(index)
 func _process(delta):
-	if get_node("../CanvasLayer/Button").pressed:
-		print("craft clicked")
-		if is_craftable:
-			if _inventory.has_item(current_recipe) :
-				_inventory.add_item(current_recipe)
-			else :
-				_inventory.create_and_add_item(current_recipe.get_property("id"))
-			var ingredients = current_recipe.get_property("ingredient")
-			for ingredient in ingredients.keys():
-				for i in range(ingredients[ingredient]):
-					_inventory.remove_item(_inventory.get_item_by_id(ingredient))
-			_print_recipe(ingredients)
+	pass
+#	if get_node("../CanvasLayer/Button").pressed:
+#		print("craft clicked")
+#		if is_craftable:
+#			if _inventory.has_item(current_recipe) :
+#				_inventory.add_item(current_recipe)
+#			else :
+#				_inventory.create_and_add_item(current_recipe.get_property("id"))
+#			var ingredients = current_recipe.get_property("ingredient")
+#			for ingredient in ingredients.keys():
+#				for i in range(ingredients[ingredient]):
+#					_inventory.remove_item(_inventory.get_item_by_id(ingredient))
+#			_print_recipe(ingredients)
+#		else :
+#			print("can't craft!")
+
+
+func _on_Button_pressed():
+	print("craft clicked")
+	if is_craftable:
+		if _inventory.has_item(current_recipe) :
+			_inventory.add_item(current_recipe)
 		else :
-			print("can't craft!")
+			_inventory.create_and_add_item(current_recipe.get_property("id"))
+		var ingredients = current_recipe.get_property("ingredient")
+		for ingredient in ingredients.keys():
+			for i in range(ingredients[ingredient]):
+				_inventory.remove_item(_inventory.get_item_by_id(ingredient))
+		_print_recipe(ingredients)
+	else :
+		print("can't craft!")
+	pass # Replace with function body.

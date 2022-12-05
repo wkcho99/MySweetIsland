@@ -129,13 +129,13 @@ anims/regen = SubResource( 8 )
 transform = Transform( 1.4225, 0, 0, 0, 1, 0, 0, 0, 1.58233, 0.546937, 0.208116, -0.349064 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Area"]
-transform = Transform( 1.57962, 0, 0, 0, 1, 0, 0, 0, 1.56557, -0.355031, 0, 0.232458 )
+transform = Transform( 1.66024, 0, 0, 0, 1, 0, 0, 0, 1.79996, -0.355031, 0, 0.232458 )
 shape = SubResource( 7 )
 
 [node name="StaticBody" type="StaticBody" parent="."]
 
 [node name="CollisionShape" type="CollisionShape" parent="StaticBody"]
-transform = Transform( 1.67648, 0, 0, 0, 1.24736, 0, 0, 0, 1.88628, 0, 0, 0 )
+transform = Transform( 1.67648, 0, 0, 0, 1.24736, 0, 0, 0, 1.59607, 0, 0, 0 )
 shape = SubResource( 7 )
 
 [node name="Particles" type="Particles" parent="."]

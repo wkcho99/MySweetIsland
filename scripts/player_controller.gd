@@ -52,7 +52,7 @@ var time_when_actionable = 0 # time in seconds
 var last_time_hit = -2000
 var hit = false
 onready var inventory: InventoryStacked
-var br : InventoryItem
+var alert
 var is_inven_open = false
 # onready var camera_base = $CameraBase
 # onready var camera_animation = camera_base.get_node(@"Animation")
@@ -66,7 +66,7 @@ func _ready():
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	animation_player = get_node("Model/AnimationPlayer")
 	inventory = get_node("../InventoryStacked")
-	br = inventory.get_item_by_id("branch")
+	alert = get_node("../AcceptDialog")
 
 func _process(delta):
 	time += delta
@@ -96,10 +96,14 @@ func _process(delta):
 		var position = get_valid_building_position()
 		change_building_pos(position)
 		show_if_valid_pos(position)
-		if Input.is_action_just_pressed("place_building"): # and self.branch > 0:
-			if position != null:
+		if Input.is_action_just_pressed("place_building"):
+			if !inventory.has_item_by_id(BUILDINGS[building_index]) :
+				Input.set_mouse_mode(Input.MOUSE_MODE_CONFINED)
+				alert.popup()
+				print("No item") # and self.branch > 0:
+			elif position != null:
 				place_building(position)
-				inventory.remove_item(br)
+				inventory.remove_item(inventory.get_item_by_id(BUILDINGS[building_index]))
 			else:
 				print("No valid position")
 	
@@ -390,6 +394,11 @@ func determine_offset(socket, other_socket):
 	return -offset
 
 func is_actionable():
-	if time > time_when_actionable and not is_inven_open:
+	if time > time_when_actionable and not is_inven_open and not alert.visible:
 		return true
 	return false
+
+
+func _on_AcceptDialog_confirmed():
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	pass # Replace with function body.
