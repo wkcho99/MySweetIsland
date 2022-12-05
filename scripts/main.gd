@@ -28,9 +28,10 @@ func _ready() -> void:
 	inventoryManager = get_node("InventoryStacked")
 	inventoryManager.remove_all_items()
 
+	prev_tree = get_node("Scatter3D/tree")
+
 func _process(delta):
-	if tree_tutorial and get_node("Player").translation.distance_to(get_node("tree").translation)<5:
-		print(get_node("Player").translation.distance_to(get_node("tree").translation))
+	if tree_tutorial and get_node("Player").translation.distance_to(prev_tree.translation)<10:
 		tree_tutorial()
 	if inven_tutorial and get_node("InventoryStacked").get_item_by_id("branch") != null and get_node("InventoryStacked").has_item(get_node("InventoryStacked").get_item_by_id("branch")):
 		inven_tutorial()

@@ -1,5 +1,0 @@
-[gd_scene load_steps=2 format=2]
-
-[ext_resource path="res://downloads/gl4mj8gaz7k0-Axe/Axe/Axe.obj/Axe.obj" type="PackedScene" id=1]
-
-[node name="Axe" instance=ExtResource( 1 )]

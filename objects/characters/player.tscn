@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://materials/player_material.tres" type="Material" id=1]
 [ext_resource path="res://objects/characters/main_character.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scripts/player_controller.gd" type="Script" id=3]
+[ext_resource path="res://downloads/sky2.jpg" type="Texture" id=4]
 
 [sub_resource type="CapsuleShape" id=1]
 radius = 0.55
@@ -13,10 +14,16 @@ mid_height = 2.0
 
 [sub_resource type="SphereShape" id=3]
 
+[sub_resource type="PanoramaSky" id=5]
+panorama = ExtResource( 4 )
+
+[sub_resource type="Environment" id=4]
+background_mode = 2
+background_sky = SubResource( 5 )
+
 [node name="Player" type="KinematicBody"]
 collision_layer = 2
 script = ExtResource( 3 )
-stop_on_slope = true
 infinite_inertia = true
 FORWARD_OFFSET = 5
 
@@ -39,4 +46,6 @@ shape = SubResource( 3 )
 spring_length = 6.0
 
 [node name="Camera" type="Camera" parent="SpringArm"]
+environment = SubResource( 4 )
 fov = 90.0
+far = 500.0

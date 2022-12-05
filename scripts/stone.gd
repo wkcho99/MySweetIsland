@@ -8,7 +8,7 @@ var br : InventoryItem
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	inventory = get_node("../../InventoryStacked")
+	inventory = get_node("/root/World/InventoryStacked")
 	br = inventory.get_item_by_id("stone")
 	set_axis_lock(1, true)
 	set_axis_lock(2, true)
@@ -26,7 +26,7 @@ func _process(delta):
 		set_axis_lock(4, false)
 		visible = true
 
-	if get_node("./Area").overlaps_body(get_node("../../Player"))  && visible == true:
+	if get_node("./Area").overlaps_body(get_node("/root/World/Player"))  && visible == true:
 		visible = false
 		queue_free()
 		if inventory.get_item_by_id("stone") != null and inventory.has_item(inventory.get_item_by_id("stone")):

@@ -3,6 +3,7 @@ extends Spatial
 onready var _animator := get_node("AnimationPlayer")
 onready var world = get_node("/root/World")
 onready var _particles = get_node("Particles")
+onready var player = get_node("/root/World/Player")
 var fall = false
 var can_cut = false
 var time_start = 0
@@ -24,10 +25,15 @@ func _ready():
 
 	_particles.emitting = false
 	add_to_group("mines")
-	pass # Replace with function body.
+	get_node(".").rotation.y = rand_range(0, 360)
+	var horizontal_scale = rand_range(0.8, 1.5)
+	get_node(".").scale.x = horizontal_scale
+	get_node(".").scale.y = rand_range(0.8, 1.5)
+	get_node(".").scale.z = horizontal_scale
+	pass
 
 func _process(delta):
-	if get_node("Area").overlaps_body(get_node("../Player")) :
+	if get_node("Area").overlaps_body(player) :
 		can_cut = true
 	else: can_cut = false
 		
@@ -38,7 +44,7 @@ func _process(delta):
 	_regen()
 
 func _fall():
-	if get_node("../Player").hit && fall == false && can_cut: 
+	if player.hit && fall == false && can_cut: 
 		_animator.play("fall")
 		time_start = OS.get_ticks_msec()
 		fall = true
@@ -46,7 +52,7 @@ func _fall():
 		world.has_mined = true
 		_particles.emitting = false
 	if get_node("Sphere").mesh.surface_get_material(0).albedo_color[3] > 0 and \
-		 get_node("../Player").hit and can_cut:
+		 player.hit and can_cut:
 		_drop()
 	elif get_node("Sphere").mesh.surface_get_material(0).albedo_color[3] == 0 : 
 		get_node("Area/CollisionShape").disabled = true

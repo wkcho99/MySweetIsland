@@ -22,7 +22,7 @@ export (float) var mouse_max_up = 90.0 #Mouse max look angle up
 export (float) var mouse_max_down = -80.0 #Mouse max look angle down
 export (float) var jump_speed = 25.0 #Players jumps speed
 export (bool) var allow_fall_input = true #Alow player to input movment when falling
-export (bool) var stop_on_slope = false #Toggle sliding on slopes
+export (bool) var stop_on_slope = true #Toggle sliding on slopes
 export (float) var max_slides = 4.0 #Maximum of slides
 export (float) var floor_max_angle = 60.0 #Maximum slop angle player can traverse
 export (bool) var infinite_inertia = false #Toggle infinite inertia
@@ -158,7 +158,7 @@ func _physics_process(delta):
 		velocity += gravity_vector * gravity * weight * delta
 
 	#Player move
-	move_and_slide(velocity, floor_normal, stop_on_slope, max_slides, deg2rad(floor_max_angle), infinite_inertia)
+	velocity = move_and_slide(velocity, floor_normal, stop_on_slope, max_slides, deg2rad(floor_max_angle), infinite_inertia)
 	pass
 
 

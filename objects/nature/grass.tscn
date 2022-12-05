@@ -1,9 +1,9 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://downloads/91-trava-kolosok/Trava Kolosok.obj" type="ArrayMesh" id=2]
+[ext_resource path="res://objects/nature/grass_straw.obj" type="ArrayMesh" id=1]
+[ext_resource path="res://materials/grass.tres" type="Material" id=2]
 
-[node name="Spatial" type="Spatial"]
-
-[node name="MeshInstance" type="MeshInstance" parent="."]
-transform = Transform( 0.01, 0, 0, 0, 0.01, 0, 0, 0, 0.01, 0, 0, 0 )
-mesh = ExtResource( 2 )
+[node name="GrassMesh" type="MeshInstance"]
+transform = Transform( 0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0 )
+mesh = ExtResource( 1 )
+material/0 = ExtResource( 2 )

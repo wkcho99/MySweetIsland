@@ -18,6 +18,11 @@ var time_elapsed = time_now - time_start
 func _ready():
 	_particles.emitting = false
 	add_to_group("trees")
+	get_node(".").rotation.y = rand_range(0, 360)
+	var horizontal_scale = rand_range(0.8, 1.5)
+	get_node(".").scale.x = horizontal_scale
+	get_node(".").scale.y = rand_range(0.8, 1.5)
+	get_node(".").scale.z = horizontal_scale
 	pass
 
 func _process(delta):
@@ -32,9 +37,9 @@ func _process(delta):
 
 func _fall():
 	if player.hit && fall == false && can_cut:
-		if get_node("../CanvasLayer2/tree").visible :
+		if get_node("/root/World/CanvasLayer2/tree").visible :
 			print("invisible")
-			get_node("../CanvasLayer2/tree").visible = false
+			get_node("/root/World/CanvasLayer2/tree").visible = false
 		_animator.play("fall")
 		var material_url = "res://objects/nature/branch.tscn"
 		var building_type = load(material_url)
