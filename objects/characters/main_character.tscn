@@ -676,10 +676,6 @@ tracks/94/keys = PoolRealArray( 0, 1, 0, 0, 0, -4.32617e-08, -1.11758e-08, 7.188
 [node name="Object_17" parent="Sketchfab_model/5d4935310a2540cda4b80b9934d7311afbx/Object_2/RootNode/Object_4/Skeleton" index="5"]
 visible = false
 
-[node name="Axe" type="MeshInstance" parent="Sketchfab_model/5d4935310a2540cda4b80b9934d7311afbx/Object_2/RootNode/Object_4/Skeleton" index="6"]
-transform = Transform( 100, 0, 0, 0, 100, 2.22045e-14, 0, -2.22045e-14, 100, 980.381, -3391.53, -2539.77 )
-skeleton = NodePath("../../../../../../..")
-
 [node name="sword" parent="Sketchfab_model/5d4935310a2540cda4b80b9934d7311afbx/Object_2/RootNode/Object_4" index="7"]
 transform = Transform( 100, 0, 0, 0, -1.19209e-05, 100, 0, -100, -1.19209e-05, 0, 0, 0 )
 
