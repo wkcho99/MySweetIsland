@@ -60,12 +60,14 @@ var is_inven_open = false
 onready var spring_arm = get_node(@"SpringArm")
 onready var camera = spring_arm.get_node(@"Camera")
 onready var world = get_node("/root/World")
+onready var waterLayer = get_node("/root/World/CanvasLayer3")
 
 func _ready():
 	if mouse_captured:
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	animation_player = get_node("Model/AnimationPlayer")
 	inventory = get_node("../InventoryStacked")
+	
 	alert = get_node("../AcceptDialog")
 
 func _process(delta):
@@ -131,7 +133,9 @@ func _physics_process(delta):
 		if Input.is_action_pressed("move_backwards"):
 			dir.z -= 1
 				
-		if dir.length() != 0:
+		if global_translation.y < 1:
+			animation_player.play("SWIM")
+		elif dir.length() != 0:
 			animation_player.play("RUN")
 		else:
 			#if !animation_player.is_playing() :
@@ -158,9 +162,13 @@ func _physics_process(delta):
 
 	#gravity
 	if !is_on_floor():
-		animation_player.play("IDLE_ITEM")
+		# animation_player.play("IDLE_ITEM")
 		velocity += gravity_vector * gravity * weight * delta
 
+	if camera.global_translation.y < 1:
+		waterLayer.visible = true
+	else:
+		waterLayer.visible = false
 	#Player move
 	velocity = move_and_slide(velocity, floor_normal, stop_on_slope, max_slides, deg2rad(floor_max_angle), infinite_inertia)
 	pass
