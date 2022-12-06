@@ -132,6 +132,11 @@ GLoot="*res://addons/gloot/gloot_autoload.gd"
 Save="*res://objects/levels/save.gd"
 GlobalSettings="*res://objects/levels/global_settings.gd"
 
+[display]
+
+window/size/width=1920
+window/size/height=1080
+
 [editor_plugins]
 
 enabled=PoolStringArray( "res://addons/dreadpon.spatial_gardener/plugin.cfg", "res://addons/gloot/plugin.cfg", "res://addons/google_fonts/plugin.cfg", "res://addons/waterways/plugin.cfg", "res://addons/zylann.hterrain/plugin.cfg", "res://addons/zylann.scatter/plugin.cfg" )

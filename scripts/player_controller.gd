@@ -99,11 +99,11 @@ func _process(delta):
 		change_building_pos(position)
 		show_if_valid_pos(position)
 		if Input.is_action_just_pressed("place_building"):
-			if !inventory.has_item_by_id(BUILDINGS[building_index]) :
-				Input.set_mouse_mode(Input.MOUSE_MODE_CONFINED)
-				alert.popup()
-				print("No item") # and self.branch > 0:
-			elif position != null:
+			# if !inventory.has_item_by_id(BUILDINGS[building_index]) :
+			# 	Input.set_mouse_mode(Input.MOUSE_MODE_CONFINED)
+			# 	alert.popup()
+			# 	print("No item") # and self.branch > 0:
+			if position != null:
 				place_building(position)
 				inventory.remove_item(inventory.get_item_by_id(BUILDINGS[building_index]))
 			else:
@@ -278,11 +278,6 @@ func get_valid_building_position():
 						if sockets_fit(long_socket, other_long_socket) and sockets_fit(short_socket, other_short_socket):
 							return [foundation.get_global_translation() + Vector3.UP*0.015, 
 											foundation.get_global_rotation()]
-			# Place close to ground
-			var casters = placing_instance.get_node("RayCasters").get_children()
-			for caster in casters:
-				if not caster.is_colliding():
-					return null
 			# Snap to other floors
 			var floors = get_tree().get_nodes_in_group("floor")
 			for socket_num in range(1, 3):
@@ -298,6 +293,11 @@ func get_valid_building_position():
 						if sockets_fit(short_socket, other_short_socket):
 							return [other_short_socket.get_global_translation() + determine_offset(short_socket, other_short_socket),
 											other_short_socket.get_global_rotation()]
+			# Place close to ground
+			var casters = placing_instance.get_node("RayCasters").get_children()
+			for caster in casters:
+				if not caster.is_colliding():
+					return null
 			return [placing_instance.get_global_translation(), placing_instance.get_global_rotation()]
 
 		"wall":
@@ -332,8 +332,9 @@ func get_valid_building_position():
 			for wall in short_walls:
 				var other_wall_socket = wall.get_node("Top")
 				if sockets_fit(wall_socket, other_wall_socket):
-					return [other_wall_socket.get_global_translation() + determine_offset(wall_socket, other_wall_socket),
-									other_wall_socket.get_global_rotation()]
+					var rotation = other_wall_socket.get_global_rotation()
+					rotation.y += PI/2
+					return [other_wall_socket.get_global_translation() + determine_offset(wall_socket, other_wall_socket), rotation]
 		"roof":
 			for socket_num in range(1, 3):
 				var roof_socket = placing_instance.get_node("LongEdge" + str(socket_num))
