@@ -100,11 +100,11 @@ func _process(delta):
 		change_building_pos(position)
 		show_if_valid_pos(position)
 		if Input.is_action_just_pressed("place_building"):
-			# if !inventory.has_item_by_id(BUILDINGS[building_index]) :
-			# 	Input.set_mouse_mode(Input.MOUSE_MODE_CONFINED)
-			# 	alert.popup()
-			# 	print("No item") # and self.branch > 0:
-			if position != null:
+			if !inventory.has_item_by_id(BUILDINGS[building_index]) :
+				Input.set_mouse_mode(Input.MOUSE_MODE_CONFINED)
+				alert.popup()
+				print("No item") # and self.branch > 0:
+			elif position != null:
 				place_building(position)
 				inventory.remove_item(inventory.get_item_by_id(BUILDINGS[building_index]))
 			else:

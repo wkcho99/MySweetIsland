@@ -62,7 +62,7 @@ func _fall():
 func _regen():
 	time_now = OS.get_ticks_msec()
 	time_elapsed = time_now - time_start
-	if time_elapsed > 10000 && time_start != 0 :
+	if time_elapsed > 50000 && time_start != 0 :
 		# print(str(time_elapsed))
 		_animator.play("regen")
 		fall = false

@@ -146,13 +146,6 @@ window/size/height=1080
 window/size/fullscreen=true
 window/stretch/mode="viewport"
 
-[display]
-
-window/size/width=1920
-window/size/height=1080
-window/size/fullscreen=true
-window/stretch/mode="viewport"
-
 [editor_plugins]
 
 enabled=PoolStringArray( "res://addons/dialogue_manager/plugin.cfg", "res://addons/dreadpon.spatial_gardener/plugin.cfg", "res://addons/gloot/plugin.cfg", "res://addons/google_fonts/plugin.cfg", "res://addons/waterways/plugin.cfg", "res://addons/zylann.hterrain/plugin.cfg", "res://addons/zylann.scatter/plugin.cfg" )
