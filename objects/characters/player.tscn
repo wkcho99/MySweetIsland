@@ -38,4 +38,4 @@ spring_length = 6.0
 [node name="Camera" type="Camera" parent="SpringArm"]
 environment = SubResource( 4 )
 fov = 90.0
-far = 500.0
+far = 8192.0
