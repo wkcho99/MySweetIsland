@@ -13,7 +13,7 @@ font_data = ExtResource( 1 )
 
 [sub_resource type="StyleBoxEmpty" id=4]
 
-[sub_resource type="StyleBoxEmpty" id=5]
+[sub_resource type="StyleBoxEmpty" id=29]
 
 [sub_resource type="StyleBoxEmpty" id=6]
 
@@ -49,7 +49,7 @@ Button/fonts/font = SubResource( 1 )
 Button/styles/disabled = SubResource( 2 )
 Button/styles/focus = SubResource( 3 )
 Button/styles/hover = SubResource( 4 )
-Button/styles/normal = SubResource( 5 )
+Button/styles/normal = SubResource( 29 )
 Button/styles/pressed = SubResource( 6 )
 Label/colors/font_color = Color( 1, 1, 1, 1 )
 Label/colors/font_color_shadow = Color( 0, 0, 0, 0 )
@@ -100,7 +100,6 @@ Tabs/styles/tab_disabled = null
 Tabs/styles/tab_fg = null
 
 [node name="SettingsMenu" type="Popup"]
-visible = true
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -111,9 +110,6 @@ margin_right = 461.0
 margin_bottom = 294.0
 theme = SubResource( 11 )
 script = ExtResource( 2 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="ColorRect" type="ColorRect" parent="."]
 anchor_right = 1.0
@@ -145,9 +141,6 @@ custom_constants/margin_right = 25
 custom_constants/margin_top = 25
 custom_constants/margin_left = 25
 custom_constants/margin_bottom = 25
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="VideoSettings" type="GridContainer" parent="SettingTabs/Video/MarginContainer"]
 margin_left = 25.0
@@ -230,8 +223,8 @@ margin_bottom = 44.0
 text = "Master Volume"
 
 [node name="MasterSlider" type="HSlider" parent="SettingTabs/Audio/MarginContainer2/AudioSettings"]
-margin_left = 338.0
-margin_right = 738.0
+margin_left = 473.0
+margin_right = 873.0
 margin_bottom = 44.0
 rect_min_size = Vector2( 400, 0 )
 size_flags_horizontal = 10
@@ -248,9 +241,9 @@ margin_bottom = 108.0
 text = "Music Volume"
 
 [node name="MusicSlider" type="HSlider" parent="SettingTabs/Audio/MarginContainer2/AudioSettings"]
-margin_left = 338.0
+margin_left = 473.0
 margin_top = 64.0
-margin_right = 738.0
+margin_right = 873.0
 margin_bottom = 108.0
 rect_min_size = Vector2( 400, 0 )
 size_flags_horizontal = 10

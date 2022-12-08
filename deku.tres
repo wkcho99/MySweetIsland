@@ -1,0 +1,31 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://addons/dialogue_manager/dialogue_resource.gd" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
+resource_version = 5
+syntax_version = 2
+raw_text = "~ deku
+Deku: [[Hej!|Hi!|Annyeong!|Ohayo!|Ciao!|Bonjour!|Ni Hao!|Stop Calling me]]
+"
+errors = [  ]
+titles = {
+"deku": "1"
+}
+lines = {
+"0": {
+"next_id": "1",
+"text": "deku",
+"type": "title"
+},
+"1": {
+"character": "Deku",
+"character_replacements": [  ],
+"next_id": "",
+"replacements": [  ],
+"text": "[[Hej!|Hi!|Annyeong!|Ohayo!|Ciao!|Bonjour!|Ni Hao!|Stop Calling me]]",
+"translation_key": "[[Hej!|Hi!|Annyeong!|Ohayo!|Ciao!|Bonjour!|Ni Hao!|Stop Calling me]]",
+"type": "dialogue"
+}
+}

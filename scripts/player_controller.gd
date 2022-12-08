@@ -51,6 +51,7 @@ var time = 0 # time in seconds
 var time_when_actionable = 0 # time in seconds
 var last_time_hit = -2000
 var hit = false
+var talk = false
 onready var inventory: InventoryStacked
 var alert
 var is_inven_open = false
@@ -80,7 +81,7 @@ func _process(delta):
 		time_when_actionable = time + animation_player.get_current_animation_length()
 		#else : hit = false
 	else : hit = false
-
+	
 	if Input.is_action_just_pressed("toggle_build") and not is_placing:
 		is_placing = true
 		enter_building_mode()

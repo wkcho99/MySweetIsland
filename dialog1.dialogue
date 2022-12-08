@@ -1,0 +1,16 @@
+~ title
+Arthur: Hi! Do you need any help?
+- About mining
+	Arthur: You can get materials by pressing F in front of a tree or a rock.
+	=> title
+- About crafting
+	Arthur: You can see the recipes of building materials by pressing R and craft.
+	=> title
+- About building
+	Arthur: You can build your unique house by pressing B.
+	Arthur: But you need to follow the order.
+	Arthur: You need floor before you place walls.
+	Arthur: You need walls before you place roof.
+	=> title
+- End the conversation => END
+Arthur: Have fun and explore the island!

@@ -38,7 +38,7 @@ func _process(delta):
 		tree_tutorial()
 	if inven_tutorial and get_node("InventoryStacked").get_item_by_id("branch") != null and get_node("InventoryStacked").has_item(get_node("InventoryStacked").get_item_by_id("branch")):
 		inven_tutorial()
-	if build_tutorial and get_node("InventoryStacked").get_item_by_id("wall") != null and get_node("InventoryStacked").has_item(get_node("InventoryStacked").get_item_by_id("wall")):
+	if build_tutorial and get_node("InventoryStacked").get_item_by_id("short_wall") != null and get_node("InventoryStacked").has_item(get_node("InventoryStacked").get_item_by_id("short_wall")):
 		build_tutorial()
 	if Input.is_action_just_pressed("open_inventory"):
 		if _inventory.visible:

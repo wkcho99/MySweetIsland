@@ -6,6 +6,8 @@ extends Path
 # var b = "text"
 var max_speed = 5.0
 var min_speed = 1.5
+onready var villager = $PathFollow/RigidBody
+onready var player = get_node("/root/World/Player")
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	var _curve = Curve3D.new()
@@ -21,17 +23,25 @@ func _ready():
 	_curve.add_point($PathFollow/RigidBody.transform.origin+Vector3(3,0,3))
 	_curve.add_point($PathFollow/RigidBody.transform.origin+Vector3(1,0,1))
 	_curve.add_point($PathFollow/RigidBody.transform.origin)
-	_curve.add_point($PathFollow/RigidBody.transform.origin+Vector3(-2,0,1))
+#	_curve.add_point($PathFollow/RigidBody.transform.origin)
+#	_curve.add_point($PathFollow/RigidBody.transform.origin+Vector3(-2,0,1))
 	pass # Replace with function body.
 func _physics_process(delta):
 	
-	var old_pos = $PathFollow/RigidBody.global_translation
-	$PathFollow/RigidBody/scene/AnimationPlayer.play("walk")
-	var random_speed = rand_range(min_speed, max_speed)
-	get_node("PathFollow").offset += delta * random_speed
-	
-	var direction = $PathFollow/RigidBody.global_translation- old_pos
-	$PathFollow/RigidBody.look_at($PathFollow/RigidBody.global_transform.origin+Vector3(0,0,0), Vector3.UP)
+	var old_pos = villager.global_transform.origin
+	if villager.talking :
+		player.can_move = false
+		$PathFollow/RigidBody/scene/AnimationPlayer.play("idle")
+		villager.look_at(player.global_translation, Vector3.UP)
+		villager.rotate(Vector3.UP, PI)
+#	var random_speed = rand_range(min_speed, max_speed)
+	else:
+		player.can_move = true
+		$PathFollow/RigidBody/scene/AnimationPlayer.play("walk")
+		var random_speed = rand_range(min_speed, max_speed)
+		get_node("PathFollow").offset += delta * random_speed
+		var direction = villager.global_transform.origin- old_pos
+		villager.look_at(villager.global_transform.origin-direction, Vector3.UP)
 #	print($PathFollow/RigidBody.global_translation)
 #	$PathFollow/RigidBody.look_at_from_position($PathFollow/RigidBody.global_translation, _curve.get_closest_point($PathFollow/RigidBody.global_translation), Vector3.UP)
 #	$PathFollow/RigidBody.look_at(_curve.get_closest_point($PathFollow/RigidBody.global_translation), Vector3.UP)

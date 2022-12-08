@@ -9,7 +9,7 @@ json_data = "[
         \"id\": \"stone\",
         \"name\": \"stone\",
 		\"stack_size\": 1,
-		\"image\": \"res://images/rock.png\"
+		\"image\": \"res://images/stone.png\"
     },
 	{
         \"id\": \"gold\",
@@ -27,7 +27,7 @@ json_data = "[
         \"id\": \"branch\",
         \"name\": \"branch\",
 		\"stack_size\": 1,
-		\"image\": \"res://images/branch2.png\"
+		\"image\": \"res://images/branch.png\"
     },
 	{
         \"id\": \"short_wall\",

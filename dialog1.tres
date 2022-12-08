@@ -1,0 +1,161 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://addons/dialogue_manager/dialogue_resource.gd" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
+resource_version = 5
+syntax_version = 2
+raw_text = "~ title
+Arthur: Hi! Do you need any help?
+- About mining
+	Arthur: You can get materials by pressing F in front of a tree or a rock.
+	=> title
+- About crafting
+	Arthur: You can see the recipes of building materials by pressing R and craft.
+	=> title
+- About building
+	Arthur: You can build your unique house by pressing B.
+	Arthur: But you need to follow the order.
+	Arthur: You need floor before you place walls.
+	Arthur: You need walls before you place roof.
+	=> title
+- End the conversation => END
+Arthur: Have fun and explore the island!"
+errors = [  ]
+titles = {
+"title": "1"
+}
+lines = {
+"0": {
+"next_id": "1",
+"text": "title",
+"type": "title"
+},
+"1": {
+"character": "Arthur",
+"character_replacements": [  ],
+"next_id": "2",
+"replacements": [  ],
+"text": "Hi! Do you need any help?",
+"translation_key": "Hi! Do you need any help?",
+"type": "dialogue"
+},
+"10": {
+"character": "Arthur",
+"character_replacements": [  ],
+"next_id": "11",
+"parent_id": "8",
+"replacements": [  ],
+"text": "But you need to follow the order.",
+"translation_key": "But you need to follow the order.",
+"type": "dialogue"
+},
+"11": {
+"character": "Arthur",
+"character_replacements": [  ],
+"next_id": "12",
+"parent_id": "8",
+"replacements": [  ],
+"text": "You need floor before you place walls.",
+"translation_key": "You need floor before you place walls.",
+"type": "dialogue"
+},
+"12": {
+"character": "Arthur",
+"character_replacements": [  ],
+"next_id": "13",
+"parent_id": "8",
+"replacements": [  ],
+"text": "You need walls before you place roof.",
+"translation_key": "You need walls before you place roof.",
+"type": "dialogue"
+},
+"13": {
+"next_id": "1",
+"parent_id": "8",
+"type": "goto"
+},
+"14": {
+"next_id": "end",
+"next_id_after": "15",
+"replacements": [  ],
+"text": "End the conversation",
+"translation_key": "End the conversation",
+"type": "response"
+},
+"15": {
+"character": "Arthur",
+"character_replacements": [  ],
+"next_id": "",
+"replacements": [  ],
+"text": "Have fun and explore the island!",
+"translation_key": "Have fun and explore the island!",
+"type": "dialogue"
+},
+"2": {
+"next_id": "3",
+"next_id_after": "15",
+"replacements": [  ],
+"responses": PoolStringArray( "2", "5", "8", "14" ),
+"text": "About mining",
+"translation_key": "About mining",
+"type": "response"
+},
+"3": {
+"character": "Arthur",
+"character_replacements": [  ],
+"next_id": "4",
+"parent_id": "2",
+"replacements": [  ],
+"text": "You can get materials by pressing F in front of a tree or a rock.",
+"translation_key": "You can get materials by pressing F in front of a tree or a rock.",
+"type": "dialogue"
+},
+"4": {
+"next_id": "1",
+"parent_id": "2",
+"type": "goto"
+},
+"5": {
+"next_id": "6",
+"next_id_after": "15",
+"replacements": [  ],
+"text": "About crafting",
+"translation_key": "About crafting",
+"type": "response"
+},
+"6": {
+"character": "Arthur",
+"character_replacements": [  ],
+"next_id": "7",
+"parent_id": "5",
+"replacements": [  ],
+"text": "You can see the recipes of building materials by pressing R and craft.",
+"translation_key": "You can see the recipes of building materials by pressing R and craft.",
+"type": "dialogue"
+},
+"7": {
+"next_id": "1",
+"parent_id": "5",
+"type": "goto"
+},
+"8": {
+"next_id": "9",
+"next_id_after": "15",
+"replacements": [  ],
+"text": "About building",
+"translation_key": "About building",
+"type": "response"
+},
+"9": {
+"character": "Arthur",
+"character_replacements": [  ],
+"next_id": "10",
+"parent_id": "8",
+"replacements": [  ],
+"text": "You can build your unique house by pressing B.",
+"translation_key": "You can build your unique house by pressing B.",
+"type": "dialogue"
+}
+}

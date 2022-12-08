@@ -102,7 +102,7 @@ func _show_recipe(index: int):
 	
 func _print_recipe(ingredients:Dictionary):
 	get_node("../CanvasLayer").visible = true
-	get_node("../CanvasLayer/RichTextLabel").text = ''
+	get_node("../CanvasLayer/ItemList").clear()
 	print(str(ingredients))
 	var check = false
 	for ingredient in ingredients.keys():
@@ -111,8 +111,7 @@ func _print_recipe(ingredients:Dictionary):
 			cnt = 0
 		else:
 			cnt = _inventory._get_item_stack_size(_inventory.get_item_by_id(ingredient))
-		get_node("../CanvasLayer/RichTextLabel").text += \
-				ingredient + "(" + str(cnt)+"/"+str(ingredients[ingredient])+")"+"\n"
+		get_node("../CanvasLayer/ItemList").add_item(ingredient + "(" + str(cnt)+"/"+str(ingredients[ingredient])+")"+"\n",load("res://images/"+ingredient+".png"),false) 
 		check = true
 		if cnt<ingredients[ingredient] :
 			is_craftable = false
