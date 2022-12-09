@@ -16,12 +16,14 @@ var tree_tutorial = true
 var build_tutorial = true
 var inven_tutorial = true
 var craft_tutorial = true
+var cycle_tutorial = true
 
 func _ready() -> void:
 	get_node("CanvasLayer2/tree").visible = false
 	get_node("CanvasLayer2/build").visible = false
 	get_node("CanvasLayer2/inven").visible = false
 	get_node("CanvasLayer2/craft").visible = false
+	get_node("CanvasLayer2/cycle").visible = false
 	get_node("CanvasLayer").visible = false
 	_recipes.hide()
 	_inventory.hide()
@@ -40,6 +42,10 @@ func _process(delta):
 		inven_tutorial()
 	if build_tutorial and get_node("InventoryStacked").get_item_by_id("short_wall") != null and get_node("InventoryStacked").has_item(get_node("InventoryStacked").get_item_by_id("short_wall")):
 		build_tutorial()
+	if cycle_tutorial and Input.is_action_just_pressed("toggle_build"):
+		cycle_tutorial()
+	if get_node("CanvasLayer2/cycle").visible and not cycle_tutorial and Input.is_action_just_pressed("cycle_building"):
+		get_node("CanvasLayer2/cycle").visible = false
 	if Input.is_action_just_pressed("open_inventory"):
 		if _inventory.visible:
 			_inventory.hide()
@@ -144,6 +150,10 @@ func craft_tutorial():
 func build_tutorial():
 	get_node("CanvasLayer2/build").visible = true
 	build_tutorial = false
+
+func cycle_tutorial():
+	get_node("CanvasLayer2/cycle").visible = true
+	cycle_tutorial = false
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
